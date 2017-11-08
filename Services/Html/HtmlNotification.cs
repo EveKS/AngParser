@@ -1,4 +1,4 @@
-﻿using AngParser.Models;
+using AngParser.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -53,7 +53,7 @@ namespace AngParser.Services.Html
             this._findCount = 0;
         }
 
-        int IHtmlNotification.FindCount { get; set; }
+        int IHtmlNotification.FindCount { get => _findCount; set => _findCount = value; }
 
         IEnumerable<ParsingEmailModel> IHtmlNotification.AngParser()
         {

@@ -10,37 +10,13 @@ namespace AngParser.Services.Html
 {
     public class HtmlService : IHtmlService
     {
-        #region Singlton
-        private static readonly Object s_lock = new Object();
-
-        private static HtmlService instance = null;
-
-        public static HtmlService Instance
-        {
-            get
-            {
-                if (instance != null) return instance;
-
-                Monitor.Enter(s_lock);
-
-                HtmlService temp = new HtmlService();
-
-                Interlocked.Exchange(ref instance, temp);
-
-                Monitor.Exit(s_lock);
-
-                return instance;
-            }
-        }
-        #endregion
-
         private volatile static IHtmlNotification _htmlNotification;
 
         private IHtmlParser _htmlParser;
 
         private IHttpService _httpService;
 
-        private HtmlService()
+        public HtmlService()
         {
             HtmlService._htmlNotification = HtmlNotification.Instance;
 

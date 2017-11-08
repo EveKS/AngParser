@@ -10,6 +10,14 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
+using AngParser.Services.Html;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AngParser.Datas;
+using Microsoft.AspNetCore.Identity;
+using AngParser.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AngParser
 {
@@ -25,7 +33,60 @@ namespace AngParser
     public void ConfigureServices(IServiceCollection services)
     {
       #region Authorization handlers.
+      services.AddTransient<IHtmlService, HtmlService>();
+      #endregion
 
+      #region DB connection
+      string connection = Configuration["ConnectionStrings:DefaultConnection"];
+      //string connection = Configuration["ConnectionStrings:RegRu"];
+      services.AddDbContext<ApplicationContext>(options =>
+          options.UseSqlServer(connection));
+      #endregion
+
+      #region Identity
+      services.AddIdentity<User, IdentityRole>(options =>
+      {
+        options.User = new UserOptions
+        {
+          RequireUniqueEmail = true,
+          //AllowedUserNameCharacters = "допустимые символы"
+        };
+
+        options.Password = new PasswordOptions
+        {
+          RequireDigit = true,
+          RequireNonAlphanumeric = false,
+          RequireUppercase = false,
+          RequireLowercase = true,
+          RequiredLength = 5,
+        };
+      })
+          .AddEntityFrameworkStores<ApplicationContext>();
+
+      services.AddAuthentication()
+          .AddFacebook(facebookOptions =>
+          {
+            facebookOptions.AppId = "AppId";
+            facebookOptions.AppSecret = "AppSecret ";
+          });
+
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+          .AddJwtBearer(cfg =>
+          {
+            cfg.RequireHttpsMetadata = false;
+            cfg.SaveToken = true;
+
+            cfg.TokenValidationParameters = new TokenValidationParameters()
+            {
+                    //ValidateIssuerSigningKey = true,
+                    //ValidateIssuer = true,
+                    ValidateLifetime = true,
+
+              ValidIssuer = "234234",
+              ValidAudience = "234234",
+              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("rte_tert_ert_re_tretretert!!"))
+            };
+          });
       #endregion
 
       #region Gzip Deflate

@@ -35,16 +35,18 @@ export class FetchDataComponent {
             }, error => {
                 console.log('ERROR');
                 console.error(error);
+                this.continue = false;
             });
     }
 
     AngParsers() {
         this._http.get(this._baseUrl + 'api/emailparser/get-emails')
             .subscribe(result => {
-                let messages = result.json() as Message;
+              let messages = result.json() as Message;
+
+                this.messages.push(...messages.emails);
 
                 if (messages.continue) {
-                    this.messages.push(...messages.emails);
                     setTimeout(() => { this.AngParsers(); }, 250);
                 }
 

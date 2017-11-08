@@ -15,18 +15,18 @@ namespace AngParser.Controllers
 
         private IHtmlService _htmlService;
 
-        public EmailParserController()
+        public EmailParserController(IHtmlService htmlService)
         {
             this._htmlNotification = HtmlNotification.Instance;
 
-            this._htmlService = HtmlService.Instance;
+            this._htmlService = htmlService;
         }
 
         // POST api/emailparser/start
         [HttpPost("start")]
         public IActionResult Start([FromBody]string message)
         {
-            Run(100, message.Split(new[] { ' ', '\n' }).Select(uri => new Uri(uri)));
+            Run(10, message.Split(new[] { ' ', '\n' }).Select(uri => new Uri(uri)));
 
             return Ok(new { ok = "ok" });
         }
@@ -44,7 +44,7 @@ namespace AngParser.Controllers
                 message = this._htmlNotification.AngParser().Select(mes => mes.Email);
             }
 
-            return Ok(new { Continue = this._htmlNotification.FindCount < 100, emails = message });
+            return Ok(new { Continue = this._htmlNotification.FindCount < 10, emails = message });
         }
 
         private async void Run(int count, IEnumerable<Uri> urls)
@@ -63,9 +63,7 @@ namespace AngParser.Controllers
             {
                 var task = Task.Run(async () =>
                 {
-                    IHtmlService htmlService = HtmlService.Instance;
-
-                    await htmlService.DeepAdd(url, url, count);
+                    await this._htmlService.DeepAdd(url, url, count);
                 });
 
                 tasks.Add(task);
