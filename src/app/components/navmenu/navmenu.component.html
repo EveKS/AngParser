@@ -1,23 +1,57 @@
 <div class='main-nav'>
-    <div class='navbar navbar-inverse'>
-        <div class='navbar-header'>
-            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                <span class='sr-only'>Toggle navigation</span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-            </button>
-            <a class='navbar-brand' [routerLink]="['/home']">aegis</a>
-        </div>
-        <div class='clearfix'></div>
-        <div class='navbar-collapse collapse'>
-            <ul class='nav navbar-nav'>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/finf-emails']">
-                        <span class='glyphicon glyphicon-th-list'></span> Find emails
-                    </a>
-                </li>
-            </ul>
-        </div>
+  <div class='navbar navbar-inverse'>
+    <div class='navbar-header'>
+      <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+        <span class='sr-only'>Toggle navigation</span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+        <span class='icon-bar'></span>
+      </button>
+      <a class='navbar-brand' [routerLink]="['/home']">aegis</a>
     </div>
+    <div class='clearfix'></div>
+    <div class='navbar-collapse collapse'>
+      <ul *ngIf="status" class='nav navbar-nav mr-auto'>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/home']">
+            <span class='glyphicon glyphicon-home'></span> Home
+          </a>
+        </li>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/find-emails']">
+            <span class='glyphicon glyphicon-th-list'></span> Find emails
+          </a>
+        </li>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/user-settings']">
+            <span class='glyphicon glyphicon-cog'></span> User settings
+          </a>
+        </li>
+        <li class="log-off nav-item" [routerLinkActive]="['link-active']">
+          <a class="nav-link" (click)="logout()">
+            <span class='glyphicon glyphicon-log-out'></span> Logoff
+          </a>
+        </li>
+      </ul>
+
+      <ul *ngIf="!status" class="nav navbar-nav">
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/home']">
+            <span class='glyphicon glyphicon-home'></span> Home
+          </a>
+        </li>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/login']">
+            <span class='glyphicon glyphicon-log-in'></span> Login
+          </a>
+        </li>
+        <li [routerLinkActive]="['link-active']">
+          <a [routerLink]="['/register']">
+            <span class='glyphicon glyphicon-registration-mark'></span> Register
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
 </div>
