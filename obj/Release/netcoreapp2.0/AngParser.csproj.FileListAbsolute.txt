@@ -8,3 +8,4 @@ C:\Users\eveks\Documents\Visual Studio 2017\Projects\AngParser\AngParser\obj\Rel
 C:\Users\eveks\Documents\Visual Studio 2017\Projects\AngParser\AngParser\obj\Release\netcoreapp2.0\AngParser.AssemblyInfo.cs
 C:\Users\eveks\Documents\Visual Studio 2017\Projects\AngParser\AngParser\obj\Release\netcoreapp2.0\AngParser.dll
 C:\Users\eveks\Documents\Visual Studio 2017\Projects\AngParser\AngParser\obj\Release\netcoreapp2.0\AngParser.pdb
+C:\Users\eveks\Documents\Visual Studio 2017\Projects\AngParser\AngParser\obj\Release\netcoreapp2.0\AngParser.csprojResolveAssemblyReference.cache

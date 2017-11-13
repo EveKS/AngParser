@@ -18,6 +18,7 @@ using AngParser.Datas;
 using Microsoft.AspNetCore.Identity;
 using AngParser.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 namespace AngParser
 {
@@ -32,13 +33,9 @@ namespace AngParser
 
     public void ConfigureServices(IServiceCollection services)
     {
-      #region Authorization handlers.
-      services.AddTransient<IHtmlService, HtmlService>();
-      #endregion
-
       #region DB connection
-      string connection = Configuration["ConnectionStrings:DefaultConnection"];
-      //string connection = Configuration["ConnectionStrings:RegRu"];
+      //string connection = Configuration["ConnectionStrings:DefaultConnection"];
+      string connection = Configuration["ConnectionStrings:RegRu"];
       services.AddDbContext<ApplicationContext>(options =>
           options.UseSqlServer(connection));
       #endregion
@@ -119,6 +116,18 @@ namespace AngParser
       #endregion
 
       services.AddMvc();
+
+      #region services handlers.
+      IServiceProvider provider = services.BuildServiceProvider();
+
+      ApplicationContext applicationContext = provider.GetRequiredService<ApplicationContext>();
+
+      var htmlNotification = new HtmlNotification(applicationContext);
+
+      services.AddSingleton<IHtmlNotification>(htmlNotification);
+
+      services.AddTransient<IHtmlService, HtmlService>();
+      #endregion
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -140,8 +149,19 @@ namespace AngParser
         }
       });
 
+      app.UseResponseCompression();
+
       app.UseDefaultFiles();
-      app.UseStaticFiles();
+      app.UseStaticFiles(new StaticFileOptions()
+      {
+        OnPrepareResponse = content =>
+        {
+          var time = 7 * 24 * 60 * 60;
+
+          content.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age={time}";
+          content.Context.Response.Headers[HeaderNames.Expires] = DateTime.UtcNow.AddDays(7).ToString("R"); // Format RFC1123
+        }
+      });
 
       app.UseMvcWithDefaultRoute();
     }

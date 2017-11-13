@@ -1,21 +1,16 @@
-﻿using AngParser.Models;
+using AngParser.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AngParser.Services.Html
 {
-    public interface IHtmlNotification
-    {
-        int FindCount { get; set; }
-
-        event EventHandler EmailGetted;
-        event EventHandler SiteScaning;
-
-        IEnumerable<ParsingEmailModel> AngParser();
-        void PushEmail(ParsingEmailModel email);
-        void PushUri(ScaningUriModel html);
-        bool EmailContains(ParsingEmailModel email);
-        bool UriContains(ScaningUriModel uri);
-        int EmailsCount();
-    }
+  public interface IHtmlNotification
+  {
+    Task<int?> EmailsCount(string id);
+    Task<IEnumerable<ParsingEmailModel>> GetEmails(string id, string userId);
+    Task PushEmail(string email, Uri uri, string id, string userId);
+    Task<string> PushUri(string userId);
+    Task<bool> PushUri(Uri uri, string id, string userId);
+  }
 }

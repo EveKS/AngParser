@@ -15,10 +15,13 @@ export class FetchDataComponent {
   continue: boolean;
   message: string;
 
+  private _id: string;
+
   constructor(private _http: Http, @Inject('BASE_URL') private _baseUrl: string) {
     this.messages = [];
     this.continue = false;
     this.message = '';
+    this._id = '';
   }
 
   private getHeaders(): Headers {
@@ -42,6 +45,7 @@ export class FetchDataComponent {
         let ok = result.json() as Ok;
 
         if (ok.ok === 'ok') {
+          this._id = ok.id;
           this.AngParsers();
         } else {
           this.continue = false;
@@ -55,8 +59,10 @@ export class FetchDataComponent {
 
   AngParsers() {
     let headers = this.getHeaders();
+    headers.append('Content-Type', 'application/json;charset=utf-8');
+    const body = JSON.stringify(this._id);
 
-    this._http.get(this._baseUrl + 'api/emailparser/get-emails', { headers: headers })
+    this._http.post(this._baseUrl + 'api/emailparser/get-emails', body, { headers: headers })
       .subscribe(result => {
         let messages = result.json() as Message;
 
@@ -76,6 +82,7 @@ export class FetchDataComponent {
 }
 
 interface Ok {
+  id: string;
   ok: string;
 }
 

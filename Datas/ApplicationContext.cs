@@ -10,6 +10,9 @@ namespace AngParser.Datas
 {
   public class ApplicationContext : IdentityDbContext<User>
   {
+    public DbSet<ParsingEmailModel> ParsingEmailModels { get; set; }
+    public DbSet<ScaningUriModel> ScaningUriModels { get; set; }
+
     public ApplicationContext(DbContextOptions<ApplicationContext> options)
         : base(options)
     {

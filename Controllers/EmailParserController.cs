@@ -5,77 +5,128 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AngParser.Services.Html;
 using AngParser.Models;
+using AngParser.Datas;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using System.Threading;
 
 namespace AngParser.Controllers
 {
-    [Route("api/[controller]")]
-    public class EmailParserController : Controller
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+  [Route("api/[controller]")]
+  public class EmailParserController : Controller
+  {
+    ApplicationContext _context;
+
+    private readonly UserManager<User> _userManager;
+
+    private IHtmlNotification _htmlNotification;
+
+    private IHtmlService _htmlService;
+
+    public EmailParserController(IHtmlService htmlService,
+      UserManager<User> userManager,
+      IHtmlNotification htmlNotification,
+      ApplicationContext context)
     {
-        private IHtmlNotification _htmlNotification;
+      this._userManager = userManager;
 
-        private IHtmlService _htmlService;
+      this._htmlService = htmlService;
 
-        public EmailParserController(IHtmlService htmlService)
-        {
-            this._htmlNotification = HtmlNotification.Instance;
+      htmlService.CreateHtmlNotification(htmlNotification);
 
-            this._htmlService = htmlService;
-        }
+      this._context = context;
 
-        // POST api/emailparser/start
-        [HttpPost("start")]
-        public IActionResult Start([FromBody]string message)
-        {
-            Run(10, message.Split(new[] { ' ', '\n' }).Select(uri => new Uri(uri)));
-
-            return Ok(new { ok = "ok" });
-        }
-
-        // GET api/emailparser/get-emails
-        [HttpGet("get-emails")]
-        public async Task <IActionResult> AngParser()
-        {
-            var message = this._htmlNotification.AngParser().Select(mes => mes.Email);
-
-            while (message.Count() <= 0)
-            {
-                await Task.Delay(250);
-
-                message = this._htmlNotification.AngParser().Select(mes => mes.Email);
-            }
-
-            return Ok(new { Continue = this._htmlNotification.FindCount < 10, emails = message });
-        }
-
-        private async void Run(int count, IEnumerable<Uri> urls)
-        {
-            foreach (var task in MainAsync(urls, count))
-            {
-                await task;
-            }
-        }
-
-        private List<Task> MainAsync(IEnumerable<Uri> urls, int count)
-        {
-            var tasks = new List<Task>(urls.Count());
-
-            foreach (var url in urls)
-            {
-                var task = Task.Run(async () =>
-                {
-                    await this._htmlService.DeepAdd(url, url, count);
-                });
-
-                tasks.Add(task);
-            }
-
-            return tasks;
-        }
-
-        public class Message
-        {
-            public List<string> Emails { get; set; }
-            public bool Continue { get; set; }
-        }
+      this._htmlNotification = htmlNotification;
     }
+
+    // POST api/emailparser/start
+    [HttpPost("start")]
+    public async Task<IActionResult> Start([FromBody]string message)
+    {
+      var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+      if (string.IsNullOrWhiteSpace(userName))
+      {
+        return Unauthorized();
+      }
+
+      var user = await _userManager.FindByNameAsync(userName);
+
+      var id = await this.Run(user.Id, 10, message.Split(new[] { ' ', '\n' }).Select(uri => new Uri(uri)));
+
+      return Ok(new { ok = "ok", id = id });
+    }
+
+    // Post api/emailparser/get-emails
+    [HttpPost("get-emails")]
+    public async Task<IActionResult> AngParser([FromBody]string id)
+    {
+      var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+      if (string.IsNullOrWhiteSpace(userName))
+      {
+        return Unauthorized();
+      }
+
+      var user = await _userManager.FindByNameAsync(userName);
+
+      var message = (await this._htmlNotification.GetEmails(id, user.Id));
+
+      while (message == null || message.Count() <= 0)
+      {
+        Thread.Sleep(250);
+
+        message = (await this._htmlNotification.GetEmails(id, user.Id));
+      }
+
+      var rnd = new Random();
+
+      return Ok(new { Continue = rnd.Next(0, 12) < 10, emails = message.Select(mes => mes.Email) });
+    }
+
+    private async Task<string> Run(string userId, int count, IEnumerable<Uri> urls)
+    {
+      var id = await _htmlNotification.PushUri(userId);
+
+      this.RunTasks(userId, id, count, urls);
+
+      return id;
+    }
+
+    private async void RunTasks(string userId, string id, int count, IEnumerable<Uri> urls)
+    {
+      var tasks = MainAsync(userId, id, count, urls);
+
+      for (int i = 0; i < tasks.Count; i++)
+      {
+        await tasks[i];
+      }
+    }
+
+    private List<Task> MainAsync(string userId, string id, int count, IEnumerable<Uri> urls)
+    {
+      var tasks = new List<Task>(urls.Count());
+
+      foreach (var url in urls)
+      {
+        var task = Task.Run(async () =>
+        {
+          await this._htmlService.DeepAdd(userId, id, url, url, count);
+        });
+
+        tasks.Add(task);
+      }
+
+      return tasks;
+    }
+
+    public class Message
+    {
+      public List<string> Emails { get; set; }
+      public bool Continue { get; set; }
+    }
+  }
 }

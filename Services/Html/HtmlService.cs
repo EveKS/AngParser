@@ -1,3 +1,4 @@
+using AngParser.Datas;
 using AngParser.Models;
 using AngParser.Services.Http;
 using System;
@@ -8,105 +9,95 @@ using System.Threading.Tasks;
 
 namespace AngParser.Services.Html
 {
-    public class HtmlService : IHtmlService
+  public class HtmlService : IHtmlService
+  {
+    private volatile static IHtmlNotification _htmlNotification;
+
+    private IHtmlParser _htmlParser;
+
+    private IHttpService _httpService;
+
+    public HtmlService()
     {
-        private volatile static IHtmlNotification _htmlNotification;
+      this._httpService = new HttpService();
 
-        private IHtmlParser _htmlParser;
-
-        private IHttpService _httpService;
-
-        public HtmlService()
-        {
-            HtmlService._htmlNotification = HtmlNotification.Instance;
-
-            this._httpService = new HttpService();
-
-            this._htmlParser = new HtmlParser();
-        }
-
-        async Task IHtmlService.DeepAdd(Uri uri, Uri mainUri, int count)
-        {
-            await this.DeepAdd(uri, mainUri, count);
-        }
-
-        private async Task DeepAdd(Uri uri, Uri mainUri, int count)
-        {
-            if (mainUri == null || this.UriHaveCircle(uri)
-                || HtmlService._htmlNotification.FindCount > count) return;
-
-            var baseDomain = mainUri.Host.Replace("www.", string.Empty);
-
-            var thisDomain = uri.Host.Replace("www.", string.Empty);
-
-            var isbaseDomain = (!string.IsNullOrWhiteSpace(baseDomain) || !string.IsNullOrWhiteSpace(thisDomain))
-                && (baseDomain.Contains(thisDomain) || thisDomain.Contains(baseDomain));
-
-            if (isbaseDomain && uri.ToString() != "#"
-                && !_htmlNotification.UriContains(new ScaningUriModel { ScaningUri = uri })
-                && _htmlNotification.EmailsCount() < count)
-            {
-                _htmlNotification.PushUri(new ScaningUriModel { ScaningUri = uri });
-
-                var html = await _httpService.GetAsync(uri);
-
-                var emails = _htmlParser.AngParser(html);
-
-                foreach (var email in emails)
-                {
-                    this.AddEmail(email, mainUri);
-                }
-
-                var urls = _htmlParser.GetLinks(html, uri).ToList();
-
-                foreach (var url in urls)
-                {
-                    if (Uri.TryCreate(url, UriKind.Absolute, out Uri u))
-                    {
-                        if (u.Scheme == Uri.UriSchemeHttp || u.Scheme == Uri.UriSchemeHttps)
-                        {
-                            await this.DeepAdd(u, mainUri, count);
-                        }
-                        else if (u.Scheme == Uri.UriSchemeMailto)
-                        {
-                            var email = _htmlParser.AngParser(url).FirstOrDefault();
-
-                            if (!string.IsNullOrWhiteSpace(email))
-                            {
-                                this.AddEmail(email, mainUri);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private bool UriHaveCircle(Uri uri)
-        {
-            var haveCircle = uri.Query.Split('+')
-                .GroupBy(query => query)
-                .Any(group => group.Count() > 1);
-
-            haveCircle |= uri.Query.Split('%')
-                .GroupBy(query => query)
-                .Any(group => group.Count() > 1);
-
-            return haveCircle;
-        }
-
-        private void AddEmail(string email, Uri mainUri)
-        {
-            var parsingEmailModel = new ParsingEmailModel
-            {
-                Sended = false,
-                Email = email.ToLower(),
-                HtmlAdres = new Uri(mainUri.GetLeftPart(UriPartial.Authority))
-            };
-
-            if (!_htmlNotification.EmailContains(parsingEmailModel))
-            {
-                _htmlNotification.PushEmail(parsingEmailModel);
-            }
-        }
+      this._htmlParser = new HtmlParser();
     }
+
+    void IHtmlService.CreateHtmlNotification(IHtmlNotification htmlNotification)
+    {
+      if (HtmlService._htmlNotification == null)
+      {
+        HtmlService._htmlNotification = htmlNotification;
+      }
+    }
+
+    async Task IHtmlService.DeepAdd(string userId, string id, Uri uri, Uri mainUri, int count)
+    {
+      await this.DeepAdd(userId, id, uri, mainUri, count);
+    }
+
+    private async Task DeepAdd(string userId, string id, Uri uri, Uri mainUri, int count)
+    {
+      var eCount = await HtmlService._htmlNotification.EmailsCount(id);
+
+      if (mainUri == null || this.UriHaveCircle(uri)
+          || (eCount != null ? eCount : 0) > count) return;
+
+      var baseDomain = mainUri.Host.Replace("www.", string.Empty);
+
+      var thisDomain = uri.Host.Replace("www.", string.Empty);
+
+      var isbaseDomain = (!string.IsNullOrWhiteSpace(baseDomain) || !string.IsNullOrWhiteSpace(thisDomain))
+          && (baseDomain.Contains(thisDomain) || thisDomain.Contains(baseDomain));
+
+      if (isbaseDomain && uri.ToString() != "#"
+          && await _htmlNotification.PushUri(uri, id, userId))
+      {
+        var html = await _httpService.GetAsync(uri);
+
+        var emails = _htmlParser.AngParser(html);
+
+        foreach (var email in emails)
+        {
+          await _htmlNotification.PushEmail(email, uri, id, userId);
+        }
+
+        var urls = _htmlParser.GetLinks(html, uri).ToList();
+
+        foreach (var url in urls)
+        {
+          if (Uri.TryCreate(url, UriKind.Absolute, out Uri u))
+          {
+            if (u.Scheme == Uri.UriSchemeHttp || u.Scheme == Uri.UriSchemeHttps)
+            {
+              await this.DeepAdd(userId, id, u, mainUri, count);
+            }
+            else if (u.Scheme == Uri.UriSchemeMailto)
+            {
+              var email = _htmlParser.AngParser(url).FirstOrDefault();
+
+              if (!string.IsNullOrWhiteSpace(email))
+              {
+                await _htmlNotification.PushEmail(email, uri, id, userId);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    private bool UriHaveCircle(Uri uri)
+    {
+      var haveCircle = uri.Query.Split('+')
+          .GroupBy(query => query)
+          .Any(group => group.Count() > 1);
+
+      haveCircle |= uri.Query.Split('%')
+          .GroupBy(query => query)
+          .Any(group => group.Count() > 1);
+
+      return haveCircle;
+    }
+  }
 }

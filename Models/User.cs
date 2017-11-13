@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace AngParser.Models
 {
-    public class User : IdentityUser
+  public class User : IdentityUser
+  {
+    public IList<ScaningUriModel> ScaningUriModels { get; set; }
+
+    public User()
     {
+      this.ScaningUriModels = new List<ScaningUriModel>();
     }
+  }
 }
