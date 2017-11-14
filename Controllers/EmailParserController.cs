@@ -18,7 +18,9 @@ namespace AngParser.Controllers
   [Route("api/[controller]")]
   public class EmailParserController : Controller
   {
-    ApplicationContext _context;
+    private CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
+
+    private ApplicationContext _context;
 
     private readonly UserManager<User> _userManager;
 
@@ -73,23 +75,30 @@ namespace AngParser.Controllers
 
       var user = await _userManager.FindByNameAsync(userName);
 
-      var message = (await this._htmlNotification.GetEmails(id, user.Id));
+      var message = await this._htmlNotification.GetEmails(this._context, id, user.Id);
 
       while (message == null || message.Count() <= 0)
       {
-        Thread.Sleep(250);
+        await Task.Delay(500);
 
-        message = (await this._htmlNotification.GetEmails(id, user.Id));
+        message = await this._htmlNotification.GetEmails(this._context, id, user.Id);
       }
 
       var rnd = new Random();
 
-      return Ok(new { Continue = rnd.Next(0, 12) < 10, emails = message.Select(mes => mes.Email) });
+      var con = rnd.Next(0, 12) < 10;
+
+      if (con)
+      {
+        this.Stop();
+      }
+
+      return Ok(new { Continue = con, emails = message.Select(mes => mes.Email) });
     }
 
     private async Task<string> Run(string userId, int count, IEnumerable<Uri> urls)
     {
-      var id = await _htmlNotification.PushUri(userId);
+      var id = await _htmlNotification.PushUri(this._context, userId);
 
       this.RunTasks(userId, id, count, urls);
 
@@ -114,13 +123,18 @@ namespace AngParser.Controllers
       {
         var task = Task.Run(async () =>
         {
-          await this._htmlService.DeepAdd(userId, id, url, url, count);
-        });
+          await this._htmlService.DeepAdd(this._context, userId, id, url, url, count, this._cancelTokenSource.Token);
+        }, _cancelTokenSource.Token);
 
         tasks.Add(task);
       }
 
       return tasks;
+    }
+
+    private void Stop()
+    {
+      this._cancelTokenSource.Cancel();
     }
 
     public class Message

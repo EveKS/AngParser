@@ -75,9 +75,9 @@ namespace AngParser
 
             cfg.TokenValidationParameters = new TokenValidationParameters()
             {
-                    //ValidateIssuerSigningKey = true,
-                    //ValidateIssuer = true,
-                    ValidateLifetime = true,
+              //ValidateIssuerSigningKey = true,
+              //ValidateIssuer = true,
+              ValidateLifetime = true,
 
               ValidIssuer = "234234",
               ValidAudience = "234234",
@@ -122,9 +122,8 @@ namespace AngParser
 
       ApplicationContext applicationContext = provider.GetRequiredService<ApplicationContext>();
 
-      var htmlNotification = new HtmlNotification(applicationContext);
-
-      services.AddSingleton<IHtmlNotification>(htmlNotification);
+      services.AddScoped<IHtmlNotification, HtmlNotification>(option =>
+        new HtmlNotification(applicationContext));
 
       services.AddTransient<IHtmlService, HtmlService>();
       #endregion
