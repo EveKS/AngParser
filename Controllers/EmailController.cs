@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AngParser.Controllers
 {
-    [Route("api/[controller]")]
-    public class EmailController : Controller
+  [Route("api/[controller]")]
+  public class EmailController : Controller
+  {
+    // GET: api/values
+    [HttpGet]
+    public IEnumerable<string> Get()
     {
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "Hello", "World" };
-        }
+      return new string[] { "Hello", "World" };
     }
+  }
 }

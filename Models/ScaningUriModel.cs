@@ -15,6 +15,8 @@ namespace AngParser.Models
 
     public string QueryString { get; set; }
 
+    public int Count { get; set; }
+
     [NotMapped]
     public ConcurrentStack<Uri> SearchUri { get; set; }
 

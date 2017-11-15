@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using System.Threading;
+using Microsoft.EntityFrameworkCore;
 
 namespace AngParser.Controllers
 {
@@ -46,8 +47,10 @@ namespace AngParser.Controllers
 
     // POST api/emailparser/start
     [HttpPost("start")]
-    public async Task<IActionResult> Start([FromBody]string message)
+    public async Task<IActionResult> Start([FromBody]Start start)
     {
+      if (string.IsNullOrWhiteSpace(start.Message) || start.Count == 0) return BadRequest();
+
       var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
       if (string.IsNullOrWhiteSpace(userName))
@@ -57,7 +60,7 @@ namespace AngParser.Controllers
 
       var user = await _userManager.FindByNameAsync(userName);
 
-      var id = await this.Run(user.Id, 10, message.Split(new[] { ' ', '\n' }).Select(uri => new Uri(uri)));
+      var id = this.Run(user.Id, start.Count, start.Message.Split(new[] { ' ', '\n' }).Select(uri => new Uri(uri)));
 
       return Ok(new { ok = "ok", id = id });
     }
@@ -73,32 +76,37 @@ namespace AngParser.Controllers
         return Unauthorized();
       }
 
+      var scaningUriModels = await this._context.ScaningUriModels
+        .FirstOrDefaultAsync(s => s.ScaningUriModelId == id);
+
+      if (scaningUriModels == null) return BadRequest();
+
       var user = await _userManager.FindByNameAsync(userName);
 
-      var message = await this._htmlNotification.GetEmails(this._context, id, user.Id);
+      var findCount = this._htmlNotification.EmailsCount(id);
+
+      var message = this._htmlNotification.GetEmails( id, user.Id);
 
       while (message == null || message.Count() <= 0)
       {
         await Task.Delay(500);
 
-        message = await this._htmlNotification.GetEmails(this._context, id, user.Id);
+        message = this._htmlNotification.GetEmails(id, user.Id);
       }
 
       var rnd = new Random();
 
-      var con = rnd.Next(0, 12) < 10;
-
-      if (con)
+      if (scaningUriModels.Count > findCount)
       {
         this.Stop();
       }
 
-      return Ok(new { Continue = con, emails = message.Select(mes => mes.Email) });
+      return Ok(new { Continue = scaningUriModels.Count > findCount, emails = message.Select(mes => mes.Email) });
     }
 
-    private async Task<string> Run(string userId, int count, IEnumerable<Uri> urls)
+    private string Run(string userId, int count, IEnumerable<Uri> urls)
     {
-      var id = await _htmlNotification.PushUri(this._context, userId);
+      var id = _htmlNotification.PushUri(userId, count);
 
       this.RunTasks(userId, id, count, urls);
 
@@ -123,7 +131,7 @@ namespace AngParser.Controllers
       {
         var task = Task.Run(async () =>
         {
-          await this._htmlService.DeepAdd(this._context, userId, id, url, url, count, this._cancelTokenSource.Token);
+          await this._htmlService.DeepAdd(userId, id, url, url, count, this._cancelTokenSource.Token);
         }, _cancelTokenSource.Token);
 
         tasks.Add(task);
@@ -142,5 +150,12 @@ namespace AngParser.Controllers
       public List<string> Emails { get; set; }
       public bool Continue { get; set; }
     }
+  }
+
+  public class Start
+  {
+    public string Message { get; set; }
+
+    public int Count { get; set; }
   }
 }

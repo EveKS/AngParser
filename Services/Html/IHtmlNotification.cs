@@ -8,10 +8,10 @@ namespace AngParser.Services.Html
 {
   public interface IHtmlNotification
   {
-    Task<int?> EmailsCount(string id);
-    Task<IEnumerable<ParsingEmailModel>> GetEmails(ApplicationContext context, string id, string userId);
-    Task PushEmail(ApplicationContext context, string email, Uri uri, string id, string userId);
-    Task<string> PushUri(ApplicationContext context, string userId);
-    Task<bool> PushUri(ApplicationContext context, Uri uri, string id, string userId);
+    int? EmailsCount(string id);
+    IEnumerable<ParsingEmailModel> GetEmails(string id, string userId);
+    void PushEmail(string email, Uri uri, string id, string userId);
+    string PushUri(string userId, int count);
+    bool PushUri(Uri uri, string id, string userId);
   }
 }

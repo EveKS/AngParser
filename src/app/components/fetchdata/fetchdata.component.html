@@ -4,12 +4,17 @@
   <hr />
   <br />
   <div class="row">
-    <form (ngSubmit)="sendMessage()" #messageForm="ngForm">
-      <div class="form-group col-md-6">
+    <form (ngSubmit)="sendMessage()" #messageForm="ngForm" class="col-md-6">
+      <div class="form-group">
+        <input type="text" class="form-control" id="count" name="message"
+               placeholder="count..." [(ngModel)]="count"
+               required>
+      </div>
+      <div class="form-group">
         <label class="sr-only" for="message">Url</label>
         <textarea type="text" class="form-control" id="message" placeholder="your urls..." name="message" [(ngModel)]="message" rows="5" required></textarea>
       </div>
-      <div class="form-group col-md-12">
+      <div class="form-group">
         <button type="submit" class="btn btn-primary" [disabled]="!messageForm.valid || continue">Find email</button>
       </div>
     </form>

@@ -23,40 +23,45 @@ namespace AngParser.Services.Html
       this._uris = new ConcurrentStack<ScaningUriModel>();
     }
 
-    async Task<IEnumerable<ParsingEmailModel>> IHtmlNotification.GetEmails(ApplicationContext context, string id, string userId)
+    private static object lockEmails = new object();
+
+    IEnumerable<ParsingEmailModel> IHtmlNotification.GetEmails(string id, string userId)
     {
-      ScaningUriModel searchUrls = await CreateScaningUriModel(context, id, userId);
+      ScaningUriModel searchUrls = CreateScaningUriModel(id, userId, 0);
 
-      var emails = await context.ParsingEmailModels
-        .Where(e => e.ScaningUriModelId == searchUrls.ScaningUriModelId && !e.Sended)
-        .ToListAsync();
-
-      if (emails != null)
+      lock (lockEmails)
       {
-        for (int i = 0; i < emails.Count; i++)
+        var emails = this._context.ParsingEmailModels
+          .Where(e => e.ScaningUriModelId == id && !e.Sended)
+          .ToList();
+
+        if (emails != null)
         {
-          emails[i].Sended = true;
+          for (int i = 0; i < emails.Count; i++)
+          {
+            emails[i].Sended = true;
+          }
+
+          //this._context.UpdateRange(emails);
+          this._context.SaveChanges();
+
+          return emails;
         }
-
-        //this._context.UpdateRange(emails);
-        await context.SaveChangesAsync();
-
-        return emails;
       }
 
       return null;
     }
 
-    async Task<string> IHtmlNotification.PushUri(ApplicationContext context, string userId)
+    string IHtmlNotification.PushUri(string userId, int count)
     {
-      ScaningUriModel searchUrls = await CreateScaningUriModel(context, string.Empty, userId);
+      ScaningUriModel searchUrls = CreateScaningUriModel(string.Empty, userId, count);
 
       return searchUrls.ScaningUriModelId;
     }
 
-    async Task<bool> IHtmlNotification.PushUri(ApplicationContext context, Uri uri, string id, string userId)
+    bool IHtmlNotification.PushUri(Uri uri, string id, string userId)
     {
-      ScaningUriModel searchUrls = await CreateScaningUriModel(context, id, userId);
+      ScaningUriModel searchUrls = CreateScaningUriModel(id, userId, 0);
 
       if (searchUrls.SearchUri.Contains(uri)) return false;
 
@@ -65,51 +70,65 @@ namespace AngParser.Services.Html
       return true;
     }
 
-    async Task IHtmlNotification.PushEmail(ApplicationContext context, string email, Uri uri, string id, string userId)
+    void IHtmlNotification.PushEmail(string email, Uri uri, string id, string userId)
     {
-      ScaningUriModel searchUrls = await CreateScaningUriModel(context, id, userId);
-
-      if (!await this._context.ParsingEmailModels.Where(e => e.ScaningUriModelId == searchUrls.ScaningUriModelId)
-        .AnyAsync(e => e.Email == email))
+      ScaningUriModel searchUrls = CreateScaningUriModel(id, userId, 0);
+      lock (lockEmails)
       {
-        var parsingEmailModel = new ParsingEmailModel
+        if (!this._context.ParsingEmailModels.Where(e => e.ScaningUriModelId == id)
+        .Any(e => e.Email == email))
         {
-          Email = email,
-          Sended = false,
-          Uri = uri,
-          ScaningUriModelId = id
-        };
+          var parsingEmailModel = new ParsingEmailModel
+          {
+            Email = email,
+            Sended = false,
+            Uri = uri,
+            ScaningUriModelId = id
+          };
 
-        await this._context.AddAsync(parsingEmailModel);
-        await this._context.SaveChangesAsync();
+          this._context.Add(parsingEmailModel);
+          this._context.SaveChanges();
+        }
       }
     }
 
-    async Task<int?> IHtmlNotification.EmailsCount(string id) => (await this._context.ScaningUriModels
-      .FirstOrDefaultAsync(u => u.ScaningUriModelId == id))
-      ?.ParsingEmailModels?.Count;
+    int? IHtmlNotification.EmailsCount(string id)
+    {
+      lock (lockEmails)
+      {
+        return (this._context.ScaningUriModels
+        .FirstOrDefault(u => u.ScaningUriModelId == id))
+        ?.ParsingEmailModels?.Count;
+      }
+    }
 
-    private async Task<ScaningUriModel> CreateScaningUriModel(ApplicationContext context, string id, string userId)
+    private ScaningUriModel CreateScaningUriModel(string id, string userId, int count)
     {
       var searchUrls = this._uris.FirstOrDefault(u => u.ScaningUriModelId == id);
 
       if (searchUrls == null)
       {
-        searchUrls = await context.ScaningUriModels
-          .FirstOrDefaultAsync(u => u.ScaningUriModelId == id);
-
-        if (searchUrls == null)
+        lock (lockEmails)
         {
-          searchUrls = new ScaningUriModel()
+          searchUrls = this._context.ScaningUriModels
+          .FirstOrDefault(u => u.ScaningUriModelId == id);
+
+          if (searchUrls == null)
           {
-            UserId = userId
-          };
+            {
+              searchUrls = new ScaningUriModel()
+              {
+                UserId = userId,
+                Count = count
+              };
 
-          await context.AddAsync(searchUrls);
-          await context.SaveChangesAsync();
+              this._context.Add(searchUrls);
+              this._context.SaveChanges();
+            }
+
+            this._uris.Push(searchUrls);
+          }
         }
-
-        this._uris.Push(searchUrls);
       }
 
       return searchUrls;

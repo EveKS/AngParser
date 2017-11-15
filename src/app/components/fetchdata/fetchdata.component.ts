@@ -14,6 +14,7 @@ export class FetchDataComponent {
   messages: string[];
   continue: boolean;
   message: string;
+  count: number;
 
   private _id: string;
 
@@ -22,6 +23,7 @@ export class FetchDataComponent {
     this.continue = false;
     this.message = '';
     this._id = '';
+    this.count = 0;
   }
 
   private getHeaders(): Headers {
@@ -38,7 +40,13 @@ export class FetchDataComponent {
 
     let headers = this.getHeaders();
     headers.append('Content-Type', 'application/json;charset=utf-8');
-    const body = JSON.stringify(this.message);
+
+    let start: Start = Object.assign(new Start(), {
+      message: this.message,
+      count: this.count
+    });
+
+    const body = JSON.stringify(start);
 
     this._http.post(this._baseUrl + 'api/emailparser/start', body, { headers: headers })
       .subscribe(result => {
@@ -79,6 +87,11 @@ export class FetchDataComponent {
         this.continue = false;
       });
   }
+}
+
+class Start {
+  message: string;
+  count: number;
 }
 
 interface Ok {

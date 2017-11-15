@@ -29,18 +29,18 @@ namespace AngParser.Services.Html
       this._htmlNotification = htmlNotification;
     }
 
-    async Task IHtmlService.DeepAdd(ApplicationContext context, string userId, string id, Uri uri,
+    async Task IHtmlService.DeepAdd(string userId, string id, Uri uri,
       Uri mainUri, int count, CancellationToken token)
     {
-      await this.DeepAdd(context, userId, id, uri, mainUri, count, token);
+      await this.DeepAdd(userId, id, uri, mainUri, count, token);
     }
 
-    private async Task DeepAdd(ApplicationContext context, string userId, string id, Uri uri,
+    private async Task DeepAdd(string userId, string id, Uri uri,
       Uri mainUri, int count, CancellationToken token)
     {
       if (token.IsCancellationRequested) return;
 
-      var eCount = await this._htmlNotification.EmailsCount(id);
+      var eCount = this._htmlNotification.EmailsCount(id);
 
       if (mainUri == null || this.UriHaveCircle(uri)
           || (eCount != null ? eCount : 0) > count) return;
@@ -53,7 +53,7 @@ namespace AngParser.Services.Html
           && (baseDomain.Contains(thisDomain) || thisDomain.Contains(baseDomain));
 
       if (isbaseDomain && uri.ToString() != "#"
-          && await _htmlNotification.PushUri(context, uri, id, userId))
+          && _htmlNotification.PushUri(uri, id, userId))
       {
         var html = await _httpService.GetAsync(uri);
 
@@ -61,7 +61,7 @@ namespace AngParser.Services.Html
 
         foreach (var email in emails)
         {
-          await _htmlNotification.PushEmail(context, email, uri, id, userId);
+          _htmlNotification.PushEmail(email, uri, id, userId);
         }
 
         var urls = _htmlParser.GetLinks(html, uri).ToList();
@@ -72,7 +72,7 @@ namespace AngParser.Services.Html
           {
             if (u.Scheme == Uri.UriSchemeHttp || u.Scheme == Uri.UriSchemeHttps)
             {
-              await this.DeepAdd(context, userId, id, u, mainUri, count, token);
+              await this.DeepAdd(userId, id, u, mainUri, count, token);
             }
             else if (u.Scheme == Uri.UriSchemeMailto)
             {
@@ -80,7 +80,7 @@ namespace AngParser.Services.Html
 
               if (!string.IsNullOrWhiteSpace(email))
               {
-                await _htmlNotification.PushEmail(context, email, uri, id, userId);
+                _htmlNotification.PushEmail(email, uri, id, userId);
               }
             }
           }
