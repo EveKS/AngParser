@@ -8,6 +8,6 @@ namespace AngParser.Services.Html
   public interface IHtmlService
   {
     void CreateHtmlNotification(IHtmlNotification htmlNotification);
-    Task DeepAdd(string userId, string id, Uri uri, Uri mainUri, int count, CancellationToken token);
+    Task DeepAdd(string userId, string id, Uri uri, Uri mainUri, int deepCount, CancellationToken token);
   }
 }

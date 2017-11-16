@@ -40,22 +40,21 @@ namespace AngParser.Services.Html
     }
 
     async Task IHtmlService.DeepAdd(string userId, string id, Uri uri,
-      Uri mainUri, int count, CancellationToken token)
+      Uri mainUri, int deepCount, CancellationToken token)
     {
-      await this.DeepAdd(userId, id, uri, mainUri, count, token);
+      await this.DeepAdd(userId, id, uri, mainUri, deepCount, token);
     }
 
     private async Task DeepAdd(string userId, string id, Uri uri,
-      Uri mainUri, int count, CancellationToken token)
+      Uri mainUri, int deepCount, CancellationToken token)
     {
       try
       {
         if (token.IsCancellationRequested) return;
 
-        var eCount = this._htmlNotification.EmailsCount(id);
+        if (mainUri == null || this.UriHaveCircle(uri) || deepCount <= 0) return;
 
-        if (mainUri == null || this.UriHaveCircle(uri)
-            || (eCount != null ? eCount : 0) > count) return;
+        deepCount--;
 
         var baseDomain = mainUri.Host.Replace("www.", string.Empty);
 
@@ -87,7 +86,7 @@ namespace AngParser.Services.Html
             {
               if (u.Scheme == Uri.UriSchemeHttp || u.Scheme == Uri.UriSchemeHttps)
               {
-                await this.DeepAdd(userId, id, u, mainUri, count, token);
+                await this.DeepAdd(userId, id, u, mainUri, deepCount, token);
               }
               else if (u.Scheme == Uri.UriSchemeMailto)
               {

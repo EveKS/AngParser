@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using AngParser.Services.Telegram;
+using Microsoft.AspNetCore.Http;
 
 namespace AngParser.Controllers
 {
@@ -20,6 +21,8 @@ namespace AngParser.Controllers
   [Route("api/[controller]")]
   public class EmailParserController : Controller
   {
+    const int DEEP_COUNT = 25;
+
     private CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
 
     private ApplicationContext _context;
@@ -124,7 +127,7 @@ namespace AngParser.Controllers
       {
         await this._telegramService.SendMessageExceptionAsync(ex);
 
-        return StatusCode(500, new { ok = "ok", exeption = ex });
+        return StatusCode(StatusCodes.Status500InternalServerError, new { ok = "ok", exeption = ex });
       }
     }
 
@@ -132,7 +135,7 @@ namespace AngParser.Controllers
     {
       var id = await this._htmlNotification.PushUri(userId, count);
 
-      this.RunTasks(userId, id, count, urls);
+      this.RunTasks(userId, id, DEEP_COUNT, urls);
 
       return id;
     }

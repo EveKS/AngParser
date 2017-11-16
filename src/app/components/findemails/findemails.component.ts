@@ -87,7 +87,7 @@ export class FindEmailsComponent {
 
         this.continue = messages.continue;
       }, error => {
-        if (error.json().ok && error.json().ok !== 'ok') {
+        if (!error.json().ok && error.json().ok !== 'ok') {
           setTimeout(() => { this.AngParsers(); }, 500);
         }
 
