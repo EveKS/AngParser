@@ -5,12 +5,15 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { Message } from "../../shared/models/message.inteface";
+import { OkResult } from "../../shared/models/ok.result.interface";
+import { StartParametrs } from "../../shared/models/start.parametrs.class";
 
 @Component({
   selector: 'find-emails',
-  templateUrl: './fetchdata.component.html'
+  templateUrl: './findemails.component.html'
 })
-export class FetchDataComponent {
+export class FindEmailsComponent {
   messages: string[];
   continue: boolean;
   message: string;
@@ -41,7 +44,7 @@ export class FetchDataComponent {
     let headers = this.getHeaders();
     headers.append('Content-Type', 'application/json;charset=utf-8');
 
-    let start: Start = Object.assign(new Start(), {
+    let start: StartParametrs = Object.assign(new StartParametrs(), {
       message: this.message,
       count: this.count
     });
@@ -50,7 +53,7 @@ export class FetchDataComponent {
 
     this._http.post(this._baseUrl + 'api/emailparser/start', body, { headers: headers })
       .subscribe(result => {
-        let ok = result.json() as Ok;
+        let ok = result.json() as OkResult;
 
         if (ok.ok === 'ok') {
           this._id = ok.id;
@@ -87,19 +90,4 @@ export class FetchDataComponent {
         this.continue = false;
       });
   }
-}
-
-class Start {
-  message: string;
-  count: number;
-}
-
-interface Ok {
-  id: string;
-  ok: string;
-}
-
-interface Message {
-  emails: string[];
-  continue: boolean;
 }

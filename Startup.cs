@@ -155,14 +155,23 @@ namespace AngParser
       {
         OnPrepareResponse = content =>
         {
-          var time = 7 * 24 * 60 * 60;
+          var time = 7 * 24 * 60 * 60 * 1000;
 
           content.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age={time}";
           content.Context.Response.Headers[HeaderNames.Expires] = DateTime.UtcNow.AddDays(7).ToString("R"); // Format RFC1123
         }
       });
 
-      app.UseMvcWithDefaultRoute();
+      app.UseMvc(routes =>
+      {
+        routes.MapRoute(
+            name: "default",
+            template: "{controller=Home}/{action=Index}/{id?}");
+
+        routes.MapSpaFallbackRoute(
+            name: "spa-fallback",
+            defaults: new { controller = "Home", action = "Index" });
+      });
     }
   }
 }

@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { AppComponent } from "./components/app/app.component";
+import { MainComponent } from "./components/main/main.component";
 import { NavMenuComponent } from "./components/navmenu/navmenu.component";
-import { FetchDataComponent } from "./components/fetchdata/fetchdata.component";
+import { FindEmailsComponent } from "./components/findemails/findemails.component";
 
 import { FormsModule } from '@angular/forms';
 import { HttpModule, XHRBackend } from '@angular/http';
@@ -25,7 +25,8 @@ import { EmailValidator } from "./directives/email.validator.directive";
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'find-emails', component: FetchDataComponent, canActivate: [AuthGuard] },
+
+  { path: 'find-emails', component: FindEmailsComponent, canActivate: [AuthGuard] },
 
   { path: 'register', component: RegistrationFormComponent },
   { path: 'login', component: LoginFormComponent },
@@ -40,9 +41,9 @@ const appRoutes: Routes = [
     { provide: 'BASE_URL', useFactory: getBaseUrl }
   ],
   declarations: [
-    AppComponent,
+    MainComponent,
     NavMenuComponent,
-    FetchDataComponent,
+    FindEmailsComponent,
     HomeComponent,
 
     EmailValidator,
@@ -59,7 +60,7 @@ const appRoutes: Routes = [
     CommonModule,
     RouterModule.forRoot(appRoutes)
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [MainComponent]
 })
 export class AppModule { }
 

@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AngParser.Controllers
 {
-  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+  /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]*/
   [Route("api/[controller]")]
   public class EmailParserController : Controller
   {
@@ -47,7 +47,7 @@ namespace AngParser.Controllers
 
     // POST api/emailparser/start
     [HttpPost("start")]
-    public async Task<IActionResult> Start([FromBody]Start start)
+    public async Task<IActionResult> Start([FromBody]StartParametrs start)
     {
       if (string.IsNullOrWhiteSpace(start.Message) || start.Count == 0) return BadRequest();
 
@@ -150,12 +150,5 @@ namespace AngParser.Controllers
       public List<string> Emails { get; set; }
       public bool Continue { get; set; }
     }
-  }
-
-  public class Start
-  {
-    public string Message { get; set; }
-
-    public int Count { get; set; }
   }
 }
