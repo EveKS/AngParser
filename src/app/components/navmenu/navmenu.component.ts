@@ -12,11 +12,11 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @Input() status: boolean;
 
-  constructor(private userService: UserService) {
+  constructor(private _userService: UserService) {
   }
 
   logout() {
-    this.userService.logout();
+    this._userService.logout();
   }
 
   ngOnInit(): void {

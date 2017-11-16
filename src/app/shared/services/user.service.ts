@@ -17,8 +17,8 @@ export class UserService extends BaseService {
 
   private static loggedIn = false;
 
-  constructor(private http: Http,
-    @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private _http: Http,
+    @Inject('BASE_URL') private _baseUrl: string) {
     super();
 
     UserService.authNavStatus$ = UserService._authNavStatusSource.asObservable();
@@ -36,7 +36,7 @@ export class UserService extends BaseService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.baseUrl + "api/accounts/register", body, options)
+    return this._http.post(this._baseUrl + "api/accounts/register", body, options)
       .map(res => true)
       .catch(this.handleError);
   }
@@ -45,9 +45,9 @@ export class UserService extends BaseService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    return this.http
+    return this._http
       .post(
-      this.baseUrl + 'api/accounts/login',
+      this._baseUrl + 'api/accounts/login',
       JSON.stringify({ email, password }), { headers }
       )
       .map(res => res.json())

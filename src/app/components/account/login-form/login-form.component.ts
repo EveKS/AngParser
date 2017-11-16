@@ -21,11 +21,11 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   credentials: Credentials = { email: '', password: '' };
   returnUrl: string;
 
-  constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private _userService: UserService, private _router: Router, private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     // subscribe to router event
-    this.subscription = this.activatedRoute.queryParams.subscribe(
+    this.subscription = this._activatedRoute.queryParams.subscribe(
       (param: any) => {
         this.brandNew = param['brandNew'];
         this.credentials.email = param['email'];
@@ -42,15 +42,15 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.isRequesting = true;
     this.errors = '';
     if (valid) {
-      this.userService.login(value.email, value.password)
+      this._userService.login(value.email, value.password)
         /*.finally(() => this.isRequesting = false)*/
         .subscribe(
         result => {
           if (result) {
             if (this.returnUrl !== undefined || this.returnUrl != null) {
-              this.router.navigate([this.returnUrl]);
+              this._router.navigate([this.returnUrl]);
             } else {
-              this.router.navigate(['/home']);
+              this._router.navigate(['/home']);
             }
           }
 

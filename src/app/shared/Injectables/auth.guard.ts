@@ -4,11 +4,11 @@ import { UserService } from "../../shared/services/user.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private user: UserService, private router: Router) { }
+  constructor(private _user: UserService, private _router: Router) { }
 
   canActivate() {
-    if (!this.user.isLoggedIn()) {
-      this.router.navigate(['/login']);
+    if (!this._user.isLoggedIn()) {
+      this._router.navigate(['/login']);
       return false;
     }
 

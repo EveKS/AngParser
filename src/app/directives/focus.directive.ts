@@ -2,10 +2,10 @@ import { Directive, ElementRef, Renderer, OnInit } from "@angular/core";
 
 @Directive({ selector: '[tmFocus]' })
 export class myFocus implements OnInit {
-  constructor(private el: ElementRef, private renderer: Renderer) {
+  constructor(private _el: ElementRef, private _renderer: Renderer) {
   }
 
   ngOnInit() {
-    this.renderer.invokeElementMethod(this.el.nativeElement, 'focus', []);
+    this._renderer.invokeElementMethod(this._el.nativeElement, 'focus', []);
   }
 }
