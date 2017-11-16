@@ -1,5 +1,6 @@
 using AngParser.Datas;
 using AngParser.Models;
+using AngParser.Services.Telegram;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Concurrent;
@@ -12,7 +13,9 @@ namespace AngParser.Services.Html
 {
   public class HtmlNotification : IHtmlNotification
   {
-    private ApplicationContext _context;
+    private readonly ITelegramService _telegramService;
+
+    private readonly ApplicationContext _context;
 
     private volatile ConcurrentStack<ScaningUriModel> _uris;
 
@@ -20,47 +23,62 @@ namespace AngParser.Services.Html
     {
       this._context = context;
 
+      this._telegramService = new TelegramService();
+
       this._uris = new ConcurrentStack<ScaningUriModel>();
     }
 
     private static object lockEmails = new object();
 
-    IEnumerable<ParsingEmailModel> IHtmlNotification.GetEmails(string id, string userId)
+    async Task<IEnumerable<ParsingEmailModel>> IHtmlNotification.GetEmails(string id, string userId)
     {
-      ScaningUriModel searchUrls = CreateScaningUriModel(id, userId, 0);
-
-      lock (lockEmails)
+      try
       {
-        var emails = this._context.ParsingEmailModels
-          .Where(e => e.ScaningUriModelId == id && !e.Sended)
-          .ToList();
+        ScaningUriModel searchUrls = await CreateScaningUriModel(id, userId, 0);
 
-        if (emails != null)
+        if (searchUrls == null) return null;
+
+        lock (lockEmails)
         {
-          for (int i = 0; i < emails.Count; i++)
+          var emails = this._context.ParsingEmailModels
+            .Where(e => e.ScaningUriModelId == id && !e.Sended)
+            .ToList();
+
+          if (emails != null)
           {
-            emails[i].Sended = true;
+            for (int i = 0; i < emails.Count; i++)
+            {
+              emails[i].Sended = true;
+            }
+
+            this._context.SaveChanges();
+
+            return emails;
           }
-
-          this._context.SaveChanges();
-
-          return emails;
         }
+      }
+      catch (Exception ex)
+      {
+        await this._telegramService.SendMessageExceptionAsync(ex);
       }
 
       return null;
     }
 
-    string IHtmlNotification.PushUri(string userId, int count)
+    async Task<string> IHtmlNotification.PushUri(string userId, int count)
     {
-      ScaningUriModel searchUrls = CreateScaningUriModel(string.Empty, userId, count);
+      ScaningUriModel searchUrls = await CreateScaningUriModel(string.Empty, userId, count);
+
+      if (searchUrls == null) return null;
 
       return searchUrls.ScaningUriModelId;
     }
 
-    bool IHtmlNotification.PushUri(Uri uri, string id, string userId)
+    async Task<bool> IHtmlNotification.PushUri(Uri uri, string id, string userId)
     {
-      ScaningUriModel searchUrls = CreateScaningUriModel(id, userId, 0);
+      ScaningUriModel searchUrls = await CreateScaningUriModel(id, userId, 0);
+
+      if (searchUrls == null) return false;
 
       if (searchUrls.SearchUri.Contains(uri)) return false;
 
@@ -69,25 +87,35 @@ namespace AngParser.Services.Html
       return true;
     }
 
-    void IHtmlNotification.PushEmail(string email, Uri uri, string id, string userId)
+    async Task IHtmlNotification.PushEmail(string email, Uri uri, string id, string userId)
     {
-      ScaningUriModel searchUrls = CreateScaningUriModel(id, userId, 0);
-      lock (lockEmails)
+      try
       {
-        if (!this._context.ParsingEmailModels.Where(e => e.ScaningUriModelId == id)
-        .Any(e => e.Email == email))
-        {
-          var parsingEmailModel = new ParsingEmailModel
-          {
-            Email = email,
-            Sended = false,
-            Uri = uri,
-            ScaningUriModelId = id
-          };
+        ScaningUriModel searchUrls = await CreateScaningUriModel(id, userId, 0);
 
-          this._context.Add(parsingEmailModel);
-          this._context.SaveChanges();
+        if (searchUrls == null) return;
+
+        lock (lockEmails)
+        {
+          if (!this._context.ParsingEmailModels.Where(e => e.ScaningUriModelId == id)
+          .Any(e => e.Email == email))
+          {
+            var parsingEmailModel = new ParsingEmailModel
+            {
+              Email = email,
+              Sended = false,
+              Uri = uri,
+              ScaningUriModelId = id
+            };
+
+            this._context.Add(parsingEmailModel);
+            this._context.SaveChanges();
+          }
         }
+      }
+      catch (Exception ex)
+      {
+        await this._telegramService.SendMessageExceptionAsync(ex);
       }
     }
 
@@ -96,41 +124,50 @@ namespace AngParser.Services.Html
       lock (lockEmails)
       {
         return (this._context.ScaningUriModels
-        .FirstOrDefault(u => u.ScaningUriModelId == id))
-        ?.ParsingEmailModels?.Count;
+          .FirstOrDefault(u => u.ScaningUriModelId == id))
+          ?.ParsingEmailModels?.Count;
       }
     }
 
-    private ScaningUriModel CreateScaningUriModel(string id, string userId, int count)
+    private async Task<ScaningUriModel> CreateScaningUriModel(string id, string userId, int count)
     {
-      var searchUrls = this._uris.FirstOrDefault(u => u.ScaningUriModelId == id);
-
-      if (searchUrls == null)
+      try
       {
-        lock (lockEmails)
+        var searchUrls = this._uris.FirstOrDefault(u => u.ScaningUriModelId == id);
+
+        if (searchUrls == null)
         {
-          searchUrls = this._context.ScaningUriModels
-          .FirstOrDefault(u => u.ScaningUriModelId == id);
-
-          if (searchUrls == null)
+          lock (lockEmails)
           {
+            searchUrls = this._context.ScaningUriModels
+            .FirstOrDefault(u => u.ScaningUriModelId == id);
+
+            if (searchUrls == null)
             {
-              searchUrls = new ScaningUriModel()
               {
-                UserId = userId,
-                Count = count
-              };
+                searchUrls = new ScaningUriModel()
+                {
+                  UserId = userId,
+                  Count = count
+                };
 
-              this._context.Add(searchUrls);
-              this._context.SaveChanges();
+                this._context.Add(searchUrls);
+                this._context.SaveChanges();
+              }
+
+              this._uris.Push(searchUrls);
             }
-
-            this._uris.Push(searchUrls);
           }
         }
+
+        return searchUrls;
+      }
+      catch (Exception ex)
+      {
+        await this._telegramService.SendMessageExceptionAsync(ex);
       }
 
-      return searchUrls;
+      return null;
     }
   }
 }

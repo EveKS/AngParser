@@ -73,12 +73,13 @@ namespace AngParser.Controllers
       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("rte_tert_ert_re_tretretert!!"));
       var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-      var expires_in = 10 * 60;
+      var now = DateTime.UtcNow;
+      var expires_in = 30;
 
       var token = new JwtSecurityToken("234234",
         "234234",
         claims,
-        expires: DateTime.Now.AddSeconds(expires_in),
+        expires: now.Add(TimeSpan.FromDays(expires_in)),
         signingCredentials: creds);
 
       return Ok(new
@@ -94,12 +95,12 @@ namespace AngParser.Controllers
     {
       IdentityOptions options = new IdentityOptions();
       var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(options.ClaimsIdentity.UserIdClaimType, user.Id.ToString()),
-                new Claim(options.ClaimsIdentity.UserNameClaimType, user.UserName)
-            };
+        {
+          new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+          new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+          new Claim(options.ClaimsIdentity.UserIdClaimType, user.Id.ToString()),
+          new Claim(options.ClaimsIdentity.UserNameClaimType, user.UserName)
+        };
 
       var userClaims = await _userManager.GetClaimsAsync(user);
       var userRoles = await _userManager.GetRolesAsync(user);

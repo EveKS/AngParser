@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Identity;
 using AngParser.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using AngParser.Services.Telegram;
 
 namespace AngParser
 {
@@ -75,12 +76,14 @@ namespace AngParser
 
             cfg.TokenValidationParameters = new TokenValidationParameters()
             {
-              //ValidateIssuerSigningKey = true,
-              //ValidateIssuer = true,
+              ValidateIssuer = true,
+              ValidIssuer = "234234",
+
+              ValidateAudience = true,
+              ValidAudience = "234234",
+
               ValidateLifetime = true,
 
-              ValidIssuer = "234234",
-              ValidAudience = "234234",
               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("rte_tert_ert_re_tretretert!!"))
             };
           });
@@ -126,6 +129,8 @@ namespace AngParser
         new HtmlNotification(applicationContext));
 
       services.AddTransient<IHtmlService, HtmlService>();
+
+      services.AddTransient<ITelegramService, TelegramService>();
       #endregion
     }
 
@@ -155,12 +160,14 @@ namespace AngParser
       {
         OnPrepareResponse = content =>
         {
-          var time = 7 * 24 * 60 * 60 * 1000;
+          var time = 7 * 24 * 60 * 60;
 
           content.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age={time}";
           content.Context.Response.Headers[HeaderNames.Expires] = DateTime.UtcNow.AddDays(7).ToString("R"); // Format RFC1123
         }
       });
+
+      app.UseAuthentication();
 
       app.UseMvc(routes =>
       {

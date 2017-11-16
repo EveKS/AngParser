@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -33,8 +33,8 @@ namespace AngParser.Services.Html
         IEnumerable<String> IHtmlParser.GetLinks(string html, Uri uri)
         {
             Regex reHref = new Regex(@"(?inx)
-                <a \s [^>]*
-                    href \s* = \s*
+                <(a|link|script) \s [^>]*
+                    (href|src|rel) \s* = \s*
                         (?<q> ['""] )
                             (?<url> [^""]+ )
                         \k<q>

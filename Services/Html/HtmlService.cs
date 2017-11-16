@@ -2,6 +2,7 @@ using AngParser.Datas;
 using AngParser.Models;
 using AngParser.Services.Email;
 using AngParser.Services.Http;
+using AngParser.Services.Telegram;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace AngParser.Services.Html
   {
     private volatile IHtmlNotification _htmlNotification;
 
+    private readonly ITelegramService _telegramService;
+
     private readonly IEmailValidation _emailValidation;
 
     private readonly IHtmlParser _htmlParser;
@@ -22,6 +25,8 @@ namespace AngParser.Services.Html
 
     public HtmlService()
     {
+      this._telegramService = new TelegramService();
+
       this._emailValidation = new EmailValidation();
 
       this._httpService = new HttpService();
@@ -43,56 +48,63 @@ namespace AngParser.Services.Html
     private async Task DeepAdd(string userId, string id, Uri uri,
       Uri mainUri, int count, CancellationToken token)
     {
-      if (token.IsCancellationRequested) return;
-
-      var eCount = this._htmlNotification.EmailsCount(id);
-
-      if (mainUri == null || this.UriHaveCircle(uri)
-          || (eCount != null ? eCount : 0) > count) return;
-
-      var baseDomain = mainUri.Host.Replace("www.", string.Empty);
-
-      var thisDomain = uri.Host.Replace("www.", string.Empty);
-
-      var isbaseDomain = (!string.IsNullOrWhiteSpace(baseDomain) || !string.IsNullOrWhiteSpace(thisDomain))
-          && (baseDomain.Contains(thisDomain) || thisDomain.Contains(baseDomain));
-
-      if (isbaseDomain && uri.ToString() != "#"
-          && this._htmlNotification.PushUri(uri, id, userId))
+      try
       {
-        var html = await _httpService.GetAsync(uri);
+        if (token.IsCancellationRequested) return;
 
-        var emails = this._htmlParser.AngParser(html);
+        var eCount = this._htmlNotification.EmailsCount(id);
 
-        foreach (var email in emails)
+        if (mainUri == null || this.UriHaveCircle(uri)
+            || (eCount != null ? eCount : 0) > count) return;
+
+        var baseDomain = mainUri.Host.Replace("www.", string.Empty);
+
+        var thisDomain = uri.Host.Replace("www.", string.Empty);
+
+        var isbaseDomain = (!string.IsNullOrWhiteSpace(baseDomain) || !string.IsNullOrWhiteSpace(thisDomain))
+            && (baseDomain.Contains(thisDomain) || thisDomain.Contains(baseDomain));
+
+        if (isbaseDomain && uri.ToString() != "#"
+            && await this._htmlNotification.PushUri(uri, id, userId))
         {
-          if (this._emailValidation.IsValidEmail(email))
-          {
-            this._htmlNotification.PushEmail(email, uri, id, userId);
-          }
-        }
+          var html = await _httpService.GetAsync(uri);
 
-        var urls = _htmlParser.GetLinks(html, uri).ToList();
+          var emails = this._htmlParser.AngParser(html);
 
-        foreach (var url in urls)
-        {
-          if (Uri.TryCreate(url, UriKind.Absolute, out Uri u))
+          foreach (var email in emails)
           {
-            if (u.Scheme == Uri.UriSchemeHttp || u.Scheme == Uri.UriSchemeHttps)
+            if (!token.IsCancellationRequested && this._emailValidation.IsValidEmail(email))
             {
-              await this.DeepAdd(userId, id, u, mainUri, count, token);
+              await this._htmlNotification.PushEmail(email, uri, id, userId);
             }
-            else if (u.Scheme == Uri.UriSchemeMailto)
-            {
-              var email = this._htmlParser.AngParser(url).FirstOrDefault();
+          }
 
-              if (!string.IsNullOrWhiteSpace(email) && this._emailValidation.IsValidEmail(email))
+          var urls = _htmlParser.GetLinks(html, uri).ToList();
+
+          foreach (var url in urls)
+          {
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri u))
+            {
+              if (u.Scheme == Uri.UriSchemeHttp || u.Scheme == Uri.UriSchemeHttps)
               {
-                _htmlNotification.PushEmail(email, uri, id, userId);
+                await this.DeepAdd(userId, id, u, mainUri, count, token);
+              }
+              else if (u.Scheme == Uri.UriSchemeMailto)
+              {
+                var email = this._htmlParser.AngParser(url).FirstOrDefault();
+
+                if (!token.IsCancellationRequested && !string.IsNullOrWhiteSpace(email) && this._emailValidation.IsValidEmail(email))
+                {
+                  await _htmlNotification.PushEmail(email, uri, id, userId);
+                }
               }
             }
           }
         }
+      }
+      catch(Exception ex)
+      {
+        await this._telegramService.SendMessageExceptionAsync(ex);
       }
     }
 

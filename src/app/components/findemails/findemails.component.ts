@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, trigger, state, transition, style, animate } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from "rxjs/Observable";
@@ -77,6 +77,8 @@ export class FindEmailsComponent {
       .subscribe(result => {
         let messages = result.json() as Message;
 
+        if (messages.ok != 'ok') return;
+
         this.messages.push(...messages.emails);
 
         if (messages.continue) {
@@ -85,6 +87,10 @@ export class FindEmailsComponent {
 
         this.continue = messages.continue;
       }, error => {
+        if (error.json().ok && error.json().ok !== 'ok') {
+          setTimeout(() => { this.AngParsers(); }, 500);
+        }
+
         console.log('ERROR');
         console.error(error);
         this.continue = false;
