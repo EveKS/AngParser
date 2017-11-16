@@ -1,5 +1,6 @@
 using AngParser.Datas;
 using AngParser.Models;
+using AngParser.Services.Email;
 using AngParser.Services.Http;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,16 @@ namespace AngParser.Services.Html
   {
     private volatile IHtmlNotification _htmlNotification;
 
-    private IHtmlParser _htmlParser;
+    private readonly IEmailValidation _emailValidation;
 
-    private IHttpService _httpService;
+    private readonly IHtmlParser _htmlParser;
+
+    private readonly IHttpService _httpService;
 
     public HtmlService()
     {
+      this._emailValidation = new EmailValidation();
+
       this._httpService = new HttpService();
 
       this._htmlParser = new HtmlParser();
@@ -53,15 +58,18 @@ namespace AngParser.Services.Html
           && (baseDomain.Contains(thisDomain) || thisDomain.Contains(baseDomain));
 
       if (isbaseDomain && uri.ToString() != "#"
-          && _htmlNotification.PushUri(uri, id, userId))
+          && this._htmlNotification.PushUri(uri, id, userId))
       {
         var html = await _httpService.GetAsync(uri);
 
-        var emails = _htmlParser.AngParser(html);
+        var emails = this._htmlParser.AngParser(html);
 
         foreach (var email in emails)
         {
-          _htmlNotification.PushEmail(email, uri, id, userId);
+          if (this._emailValidation.IsValidEmail(email))
+          {
+            this._htmlNotification.PushEmail(email, uri, id, userId);
+          }
         }
 
         var urls = _htmlParser.GetLinks(html, uri).ToList();
@@ -76,9 +84,9 @@ namespace AngParser.Services.Html
             }
             else if (u.Scheme == Uri.UriSchemeMailto)
             {
-              var email = _htmlParser.AngParser(url).FirstOrDefault();
+              var email = this._htmlParser.AngParser(url).FirstOrDefault();
 
-              if (!string.IsNullOrWhiteSpace(email))
+              if (!string.IsNullOrWhiteSpace(email) && this._emailValidation.IsValidEmail(email))
               {
                 _htmlNotification.PushEmail(email, uri, id, userId);
               }

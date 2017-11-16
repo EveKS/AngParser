@@ -42,7 +42,6 @@ namespace AngParser.Services.Html
             emails[i].Sended = true;
           }
 
-          //this._context.UpdateRange(emails);
           this._context.SaveChanges();
 
           return emails;
