@@ -9,6 +9,8 @@ namespace AngParser.Services.Email
   {
     bool IEmailValidation.IsValidEmail(string email)
     {
+      if (this.IsImagePath(email)) return false;
+
       try
       {
         var addr = new System.Net.Mail.MailAddress(email);
@@ -18,6 +20,12 @@ namespace AngParser.Services.Email
       {
         return false;
       }
+    }
+
+    private bool IsImagePath(string email)
+    {
+      return email.EndsWith(".bmp") || email.EndsWith(".gif") || email.EndsWith(".png") ||
+        email.EndsWith(".tiff") || email.EndsWith(".jpeg");
     }
   }
 }
