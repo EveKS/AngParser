@@ -12,12 +12,18 @@ using System.Text.RegularExpressions;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading;
+using Microsoft.Extensions.Configuration;
 
 namespace AngParser.Services.Telegram
 {
   class TelegramService : ITelegramService
   {
-    const string TOKEN = "344652520:AAE6zsadftMdDgalmz2H3vEMq52eAR5bjag";
+    private readonly IConfiguration _configuration;
+
+    public TelegramService(IConfiguration configuration)
+    {
+      this._configuration = configuration;
+    }
 
     async Task ITelegramService.SendMessageExceptionAsync(Exception ex)
     {
@@ -46,7 +52,7 @@ namespace AngParser.Services.Telegram
     {
       using (var httpClient = new HttpClient())
       {
-        var url = "https://api.telegram.org/bot" + TOKEN +
+        var url = "https://api.telegram.org/bot" + this._configuration["Telegram:Token"] +
             "/sendMessage?";
 
         using (var content = new FormUrlEncodedContent(new[]

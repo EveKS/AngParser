@@ -20,6 +20,7 @@ using AngParser.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using AngParser.Services.Telegram;
+using AngParser.Service.JSON;
 
 namespace AngParser
 {
@@ -125,12 +126,20 @@ namespace AngParser
 
       ApplicationContext applicationContext = provider.GetRequiredService<ApplicationContext>();
 
+      IConfiguration configuration = provider.GetRequiredService<IConfiguration>();
+
+      services.AddTransient<ITelegramService, TelegramService>(option =>
+        new TelegramService(configuration));
+
+      ITelegramService telegramService = provider.GetRequiredService<ITelegramService>();
+
       services.AddScoped<IHtmlNotification, HtmlNotification>(option =>
-        new HtmlNotification(applicationContext));
+        new HtmlNotification(applicationContext, telegramService));
 
-      services.AddTransient<IHtmlService, HtmlService>();
+      services.AddTransient<IHtmlService, HtmlService>(option =>
+        new HtmlService(telegramService));
 
-      services.AddTransient<ITelegramService, TelegramService>();
+      services.AddTransient<IJsonService, JsonService>();
       #endregion
     }
 
