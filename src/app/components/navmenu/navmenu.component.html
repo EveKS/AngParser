@@ -22,6 +22,11 @@
             <span class='glyphicon glyphicon-th-list'></span> Find emails
           </a>
         </li>
+        <li [routerLinkActive]="['get-urls']">
+          <a [routerLink]="['/get-urls']">
+            <span class='glyphicon glyphicon-th-list'></span> Find urls
+          </a>
+        </li>
         <li [routerLinkActive]="['link-active']">
           <a [routerLink]="['/user-settings']">
             <span class='glyphicon glyphicon-cog'></span> User settings

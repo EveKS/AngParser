@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AngParser.Services.GoogleSearch
 {
-  interface IGoogleSearchService
+  public interface IGoogleSearchService
   {
     Task<IEnumerable<string>> CustomSearchAsync(string query, int count);
   }

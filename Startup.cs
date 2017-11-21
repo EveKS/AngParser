@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using AngParser.Services.Telegram;
 using AngParser.Service.JSON;
+using AngParser.Services.GoogleSearch;
 
 namespace AngParser
 {
@@ -131,14 +132,15 @@ namespace AngParser
       services.AddTransient<ITelegramService, TelegramService>(option =>
         new TelegramService(configuration));
 
-      ITelegramService telegramService = provider.GetRequiredService<ITelegramService>();
+      services.AddTransient<IGoogleSearchService, GoogleSearchService>(option =>
+        new GoogleSearchService(configuration, new TelegramService(configuration)));
 
       services.AddScoped<IHtmlNotification, HtmlNotification>(option =>
-        new HtmlNotification(applicationContext, telegramService));
+        new HtmlNotification(applicationContext, new TelegramService(configuration)));
 
       services.AddTransient<IHtmlService, HtmlService>(option =>
-        new HtmlService(telegramService));
-
+        new HtmlService(new TelegramService(configuration)));
+      
       services.AddTransient<IJsonService, JsonService>();
       #endregion
     }

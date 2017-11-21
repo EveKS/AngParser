@@ -1,5 +1,6 @@
 using AngParser.Service.JSON;
 using AngParser.Services.Http;
+using AngParser.Services.Telegram;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,18 @@ namespace AngParser.Services.GoogleSearch
 {
   public class GoogleSearchService : IGoogleSearchService
   {
+    private readonly ITelegramService _telegramService;
+
     private readonly IHttpService _httpService;
 
     private readonly IJsonService _jsonService;
 
     private readonly IConfiguration _configuration;
 
-    public GoogleSearchService(IConfiguration configuration)
+    public GoogleSearchService(IConfiguration configuration, ITelegramService telegramService)
     {
+      this._telegramService = telegramService;
+
       this._jsonService = new JsonService();
 
       this._httpService = new HttpService();
@@ -39,24 +44,33 @@ namespace AngParser.Services.GoogleSearch
 
     async Task<IEnumerable<string>> IGoogleSearchService.CustomSearchAsync(string query, int count)
     {
-      List<string> result = new List<string>(count);
-
-      for (int index = 0; index < count && index < 100;)
+      try
       {
-        JsonModels.Google.GoogleSearch googleSearch = await CustomSearchAsync(query, index);
+        IEnumerable<string> result = new List<string>(count);
 
-        int? startIndex = googleSearch.Queries.NextPage.FirstOrDefault()?.StartIndex;
+        for (int index = 0; index < count && index < 100;)
+        {
+          JsonModels.Google.GoogleSearch googleSearch = await CustomSearchAsync(query, index + 1);
 
-        if (index == startIndex.Value) break;
+          int? startIndex = googleSearch.Queries.NextPage.FirstOrDefault()?.StartIndex;
 
-        index = startIndex.Value;
+          if (index == startIndex.Value) break;
 
-        var links = googleSearch.Items.Select(item => item.Link);
+          index = startIndex.Value;
 
-        result.Concat(links);
+          var links = googleSearch.Items.Select(item => item.Link);
+
+          result = result.Concat(links);
+        }
+
+        return result.Distinct();
+      }
+      catch (Exception ex)
+      {
+        await this._telegramService.SendMessageExceptionAsync(ex);
       }
 
-      return result.Distinct();
+      return null;
     }
 
     private async Task<JsonModels.Google.GoogleSearch> CustomSearchAsync(string query, int startIndex)
@@ -66,7 +80,6 @@ namespace AngParser.Services.GoogleSearch
       string json = await this._httpService.GetAsync(new Uri(queryString));
 
       return this._jsonService.JsonConvertDeserializeObjectWithNull<JsonModels.Google.GoogleSearch>(json);
-
     }
   }
 }
