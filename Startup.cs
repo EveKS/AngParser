@@ -32,15 +32,19 @@ namespace AngParser
       Configuration = configuration;
     }
 
+    ITelegramService telegram;
+
     public IConfiguration Configuration { get; }
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddApplicationInsightsTelemetry(Configuration);
+      services.AddMvc();
+
       #region DB connection
       //string connection = Configuration["ConnectionStrings:DefaultConnection"];
       string connection = Configuration["ConnectionStrings:RegRu"];
-      services.AddDbContext<ApplicationContext>(options =>
-          options.UseSqlServer(connection));
+      services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
       #endregion
 
       #region Identity
@@ -49,8 +53,8 @@ namespace AngParser
         options.User = new UserOptions
         {
           RequireUniqueEmail = true,
-          //AllowedUserNameCharacters = "допустимые символы"
-        };
+            //AllowedUserNameCharacters = "допустимые символы"
+          };
 
         options.Password = new PasswordOptions
         {
@@ -120,28 +124,25 @@ namespace AngParser
       });
       #endregion
 
-      services.AddMvc();
-
       #region services handlers.
-      IServiceProvider provider = services.BuildServiceProvider();
+      /*IServiceProvider provider = services.BuildServiceProvider();
+
+      telegram = new TelegramService(Configuration);
+
+      services.AddTransient<ITelegramService, TelegramService>(option =>
+        new TelegramService(Configuration));
+
+      services.AddTransient<IGoogleSearchService, GoogleSearchService>(option =>
+        new GoogleSearchService(Configuration, telegram));
+
+      services.AddTransient<IHtmlService, HtmlService>(option => new HtmlService(telegram));
+
+      services.AddTransient<IJsonService, JsonService>();
 
       ApplicationContext applicationContext = provider.GetRequiredService<ApplicationContext>();
 
-      IConfiguration configuration = provider.GetRequiredService<IConfiguration>();
-
-      services.AddTransient<ITelegramService, TelegramService>(option =>
-        new TelegramService(configuration));
-
-      services.AddTransient<IGoogleSearchService, GoogleSearchService>(option =>
-        new GoogleSearchService(configuration, new TelegramService(configuration)));
-
-      services.AddScoped<IHtmlNotification, HtmlNotification>(option =>
-        new HtmlNotification(applicationContext, new TelegramService(configuration)));
-
-      services.AddTransient<IHtmlService, HtmlService>(option =>
-        new HtmlService(new TelegramService(configuration)));
-      
-      services.AddTransient<IJsonService, JsonService>();
+      services.AddTransient<IHtmlNotification, HtmlNotification>(option =>
+        new HtmlNotification(applicationContext, telegram));*/
       #endregion
     }
 
@@ -175,7 +176,7 @@ namespace AngParser
 
           content.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age={time}";
           content.Context.Response.Headers[HeaderNames.Expires] = DateTime.UtcNow.AddDays(7).ToString("R"); // Format RFC1123
-        }
+          }
       });
 
       app.UseAuthentication();

@@ -19,9 +19,9 @@ namespace AngParser.Services.Html
 
     private volatile ConcurrentStack<ScaningUriModel> _uris;
 
-    public HtmlNotification(ApplicationContext context, ITelegramService telegramService)
+    public HtmlNotification(/*ApplicationContext context, */ITelegramService telegramService)
     {
-      this._context = context;
+      /*this._context = context;*/
 
       this._telegramService = telegramService;
 
