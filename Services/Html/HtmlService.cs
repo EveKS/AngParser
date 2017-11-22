@@ -23,9 +23,9 @@ namespace AngParser.Services.Html
 
     private readonly IHttpService _httpService;
 
-    public HtmlService()
+    public HtmlService(ITelegramService telegramService)
     {
-      this._telegramService = new TelegramService();
+      this._telegramService = telegramService;
 
       this._emailValidation = new EmailValidation();
 
