@@ -1,0 +1,390 @@
+2017-11-23 21:49:21.930 +07:00 [Debug] Microsoft.EntityFrameworkCore.Infrastructure: An 'IServiceProvider' was created for internal use by Entity Framework.
+2017-11-23 21:49:22.224 +07:00 [Information] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: User profile is available. Using 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2017-11-23 21:49:22.241 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-2714ea45-0f28-468f-9bcd-a84eac34a928.xml'.
+2017-11-23 21:49:22.273 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-509c50b3-9c4e-4c36-abaa-8ea821528ffc.xml'.
+2017-11-23 21:49:22.274 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-91281734-14f6-47bf-a31a-9e4f109d8332.xml'.
+2017-11-23 21:49:22.275 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-c085d87e-4737-4184-a722-64556e824a90.xml'.
+2017-11-23 21:49:22.275 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-c6394e34-5318-4515-83e2-354677d8fcf4.xml'.
+2017-11-23 21:49:22.279 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {2714ea45-0f28-468f-9bcd-a84eac34a928}.
+2017-11-23 21:49:22.284 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {509c50b3-9c4e-4c36-abaa-8ea821528ffc}.
+2017-11-23 21:49:22.284 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {91281734-14f6-47bf-a31a-9e4f109d8332}.
+2017-11-23 21:49:22.284 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {c085d87e-4737-4184-a722-64556e824a90}.
+2017-11-23 21:49:22.284 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {c6394e34-5318-4515-83e2-354677d8fcf4}.
+2017-11-23 21:49:22.295 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver: Considering key {c6394e34-5318-4515-83e2-354677d8fcf4} with expiration date 2017-12-02 13:15:18Z as default key.
+2017-11-23 21:49:22.331 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2017-11-23 21:49:22.333 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor: Decrypting secret element using Windows DPAPI.
+2017-11-23 21:49:22.335 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2017-11-23 21:49:22.342 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'AES' from provider '(null)' with chaining mode CBC.
+2017-11-23 21:49:22.350 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'SHA256' from provider '(null)' with HMAC.
+2017-11-23 21:49:22.361 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider: Using key {c6394e34-5318-4515-83e2-354677d8fcf4} as the default key.
+2017-11-23 21:49:22.364 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Internal.DataProtectionStartupFilter: Key ring with default key {c6394e34-5318-4515-83e2-354677d8fcf4} was loaded during application startup.
+2017-11-23 21:49:22.944 +07:00 [Debug] Microsoft.AspNetCore.Hosting.Internal.WebHost: Hosting starting
+2017-11-23 21:49:23.238 +07:00 [Debug] Microsoft.AspNetCore.Hosting.Internal.WebHost: Hosting started
+2017-11-23 21:49:23.242 +07:00 [Debug] Microsoft.AspNetCore.Hosting.Internal.WebHost: Loaded hosting startup assembly AngParser
+2017-11-23 21:49:23.245 +07:00 [Debug] Microsoft.AspNetCore.Hosting.Internal.WebHost: Loaded hosting startup assembly Microsoft.AspNetCore.ApplicationInsights.HostingStartup
+2017-11-23 21:49:23.249 +07:00 [Debug] Microsoft.AspNetCore.Hosting.Internal.WebHost: Loaded hosting startup assembly Microsoft.AspNetCore.Server.IISIntegration
+2017-11-23 21:49:23.415 +07:00 [Debug] Microsoft.AspNetCore.Server.Kestrel: Connection id "0HL9IG5HE6A3B" started.
+2017-11-23 21:49:23.490 +07:00 [Debug] Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv: Connection id "0HL9IG5HE6A3B" reset.
+2017-11-23 21:49:23.495 +07:00 [Debug] Microsoft.AspNetCore.Server.Kestrel: Connection id "0HL9IG5HE6A3B" disconnecting.
+2017-11-23 21:49:23.561 +07:00 [Debug] Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv: Connection id "0HL9IG5HE6A3B" sending FIN.
+2017-11-23 21:49:23.574 +07:00 [Debug] Microsoft.AspNetCore.Server.Kestrel: Connection id "0HL9IG5HE6A3B" stopped.
+2017-11-23 21:51:09.148 +07:00 [Debug] Microsoft.EntityFrameworkCore.Infrastructure: An 'IServiceProvider' was created for internal use by Entity Framework.
+2017-11-23 21:51:09.250 +07:00 [Information] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: User profile is available. Using 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2017-11-23 21:51:09.265 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-2714ea45-0f28-468f-9bcd-a84eac34a928.xml'.
+2017-11-23 21:51:09.271 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-509c50b3-9c4e-4c36-abaa-8ea821528ffc.xml'.
+2017-11-23 21:51:09.272 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-91281734-14f6-47bf-a31a-9e4f109d8332.xml'.
+2017-11-23 21:51:09.272 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-c085d87e-4737-4184-a722-64556e824a90.xml'.
+2017-11-23 21:51:09.272 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-c6394e34-5318-4515-83e2-354677d8fcf4.xml'.
+2017-11-23 21:51:09.275 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {2714ea45-0f28-468f-9bcd-a84eac34a928}.
+2017-11-23 21:51:09.279 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {509c50b3-9c4e-4c36-abaa-8ea821528ffc}.
+2017-11-23 21:51:09.279 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {91281734-14f6-47bf-a31a-9e4f109d8332}.
+2017-11-23 21:51:09.279 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {c085d87e-4737-4184-a722-64556e824a90}.
+2017-11-23 21:51:09.279 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {c6394e34-5318-4515-83e2-354677d8fcf4}.
+2017-11-23 21:51:09.288 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver: Considering key {c6394e34-5318-4515-83e2-354677d8fcf4} with expiration date 2017-12-02 13:15:18Z as default key.
+2017-11-23 21:51:09.302 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2017-11-23 21:51:09.305 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor: Decrypting secret element using Windows DPAPI.
+2017-11-23 21:51:09.307 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2017-11-23 21:51:09.314 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'AES' from provider '(null)' with chaining mode CBC.
+2017-11-23 21:51:09.321 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'SHA256' from provider '(null)' with HMAC.
+2017-11-23 21:51:09.333 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider: Using key {c6394e34-5318-4515-83e2-354677d8fcf4} as the default key.
+2017-11-23 21:51:09.335 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Internal.DataProtectionStartupFilter: Key ring with default key {c6394e34-5318-4515-83e2-354677d8fcf4} was loaded during application startup.
+2017-11-23 21:51:09.659 +07:00 [Debug] Microsoft.EntityFrameworkCore.Infrastructure: An 'IServiceProvider' was created for internal use by Entity Framework.
+2017-11-23 21:51:10.511 +07:00 [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 2.0.1-rtm-125 initialized 'ApplicationContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2017-11-23 21:51:10.660 +07:00 [Debug] Microsoft.EntityFrameworkCore.Migrations: Migrating using database 'aegisaho_aegis' on server 'tcp:aegis.a2hosted.com'.
+2017-11-23 21:51:10.671 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:aegis.a2hosted.com'.
+2017-11-23 21:54:39.633 +07:00 [Debug] Microsoft.EntityFrameworkCore.Infrastructure: An 'IServiceProvider' was created for internal use by Entity Framework.
+2017-11-23 21:54:39.725 +07:00 [Information] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: User profile is available. Using 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2017-11-23 21:54:39.739 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-2714ea45-0f28-468f-9bcd-a84eac34a928.xml'.
+2017-11-23 21:54:39.746 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-509c50b3-9c4e-4c36-abaa-8ea821528ffc.xml'.
+2017-11-23 21:54:39.746 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-91281734-14f6-47bf-a31a-9e4f109d8332.xml'.
+2017-11-23 21:54:39.746 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-c085d87e-4737-4184-a722-64556e824a90.xml'.
+2017-11-23 21:54:39.746 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository: Reading data from file 'C:\Users\eveks\AppData\Local\ASP.NET\DataProtection-Keys\key-c6394e34-5318-4515-83e2-354677d8fcf4.xml'.
+2017-11-23 21:54:39.749 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {2714ea45-0f28-468f-9bcd-a84eac34a928}.
+2017-11-23 21:54:39.753 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {509c50b3-9c4e-4c36-abaa-8ea821528ffc}.
+2017-11-23 21:54:39.753 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {91281734-14f6-47bf-a31a-9e4f109d8332}.
+2017-11-23 21:54:39.753 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {c085d87e-4737-4184-a722-64556e824a90}.
+2017-11-23 21:54:39.753 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager: Found key {c6394e34-5318-4515-83e2-354677d8fcf4}.
+2017-11-23 21:54:39.762 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver: Considering key {c6394e34-5318-4515-83e2-354677d8fcf4} with expiration date 2017-12-02 13:15:18Z as default key.
+2017-11-23 21:54:39.775 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2017-11-23 21:54:39.778 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.XmlEncryption.DpapiXmlDecryptor: Decrypting secret element using Windows DPAPI.
+2017-11-23 21:54:39.779 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2017-11-23 21:54:39.786 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'AES' from provider '(null)' with chaining mode CBC.
+2017-11-23 21:54:39.793 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.CngCbcAuthenticatedEncryptorFactory: Opening CNG algorithm 'SHA256' from provider '(null)' with HMAC.
+2017-11-23 21:54:39.803 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider: Using key {c6394e34-5318-4515-83e2-354677d8fcf4} as the default key.
+2017-11-23 21:54:39.806 +07:00 [Debug] Microsoft.AspNetCore.DataProtection.Internal.DataProtectionStartupFilter: Key ring with default key {c6394e34-5318-4515-83e2-354677d8fcf4} was loaded during application startup.
+2017-11-23 21:54:40.046 +07:00 [Debug] Microsoft.EntityFrameworkCore.Infrastructure: An 'IServiceProvider' was created for internal use by Entity Framework.
+2017-11-23 21:54:40.759 +07:00 [Information] Microsoft.EntityFrameworkCore.Infrastructure: Entity Framework Core 2.0.1-rtm-125 initialized 'ApplicationContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2017-11-23 21:54:40.798 +07:00 [Debug] Microsoft.EntityFrameworkCore.Migrations: Migrating using database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:40.808 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:43.940 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:43.942 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:43.944 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:43.955 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:43.956 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:43.962 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2017-11-23 21:54:44.168 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (207ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2017-11-23 21:54:44.168 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.168 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.168 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.168 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.168 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.168 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.258 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.258 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.258 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2017-11-23 21:54:44.453 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (194ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2017-11-23 21:54:44.453 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.453 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.455 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.455 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.455 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.455 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.455 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.455 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.455 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2017-11-23 21:54:44.642 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (186ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT OBJECT_ID(N'__EFMigrationsHistory');
+2017-11-23 21:54:44.642 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.642 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.645 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.645 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.645 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2017-11-23 21:54:44.837 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (191ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2017-11-23 21:54:44.839 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: A data reader was disposed.
+2017-11-23 21:54:44.839 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.839 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.857 +07:00 [Information] Microsoft.EntityFrameworkCore.Migrations: Applying migration '20171108150525_initial'.
+2017-11-23 21:54:44.919 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:44.919 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:45.108 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Transaction: Beginning transaction with isolation level 'ReadCommitted'.
+2017-11-23 21:54:45.109 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+2017-11-23 21:54:45.309 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (199ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+2017-11-23 21:54:45.309 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUsers] (
+    [Id] nvarchar(450) NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [Email] nvarchar(256) NULL,
+    [EmailConfirmed] bit NOT NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset NULL,
+    [NormalizedEmail] nvarchar(256) NULL,
+    [NormalizedUserName] nvarchar(256) NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [SecurityStamp] nvarchar(max) NULL,
+    [TwoFactorEnabled] bit NOT NULL,
+    [UserName] nvarchar(256) NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+);
+2017-11-23 21:54:45.506 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (196ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUsers] (
+    [Id] nvarchar(450) NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [Email] nvarchar(256) NULL,
+    [EmailConfirmed] bit NOT NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset NULL,
+    [NormalizedEmail] nvarchar(256) NULL,
+    [NormalizedUserName] nvarchar(256) NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [SecurityStamp] nvarchar(max) NULL,
+    [TwoFactorEnabled] bit NOT NULL,
+    [UserName] nvarchar(256) NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+);
+2017-11-23 21:54:45.506 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:45.697 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (191ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:45.698 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:45.907 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (209ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:45.908 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:46.098 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (190ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:46.098 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:46.290 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (191ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:46.290 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] nvarchar(450) NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:46.484 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (194ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] nvarchar(450) NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2017-11-23 21:54:46.484 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+2017-11-23 21:54:46.674 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (189ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+2017-11-23 21:54:46.674 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+2017-11-23 21:54:46.861 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (187ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+2017-11-23 21:54:46.861 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+2017-11-23 21:54:47.047 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (185ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+2017-11-23 21:54:47.047 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+2017-11-23 21:54:47.244 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (196ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+2017-11-23 21:54:47.244 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+2017-11-23 21:54:47.436 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (192ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+2017-11-23 21:54:47.437 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+2017-11-23 21:54:47.937 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (499ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+2017-11-23 21:54:47.937 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+2017-11-23 21:54:48.130 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (193ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+2017-11-23 21:54:48.130 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20171108150525_initial', N'2.0.1-rtm-125');
+2017-11-23 21:54:48.318 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (187ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20171108150525_initial', N'2.0.1-rtm-125');
+2017-11-23 21:54:48.512 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Transaction: Committing transaction.
+2017-11-23 21:54:48.518 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Transaction: Disposing transaction.
+2017-11-23 21:54:48.518 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:48.518 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:48.518 +07:00 [Information] Microsoft.EntityFrameworkCore.Migrations: Applying migration '20171113153908_update'.
+2017-11-23 21:54:48.550 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:48.550 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:49.032 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Transaction: Beginning transaction with isolation level 'ReadCommitted'.
+2017-11-23 21:54:49.032 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [ScaningUriModels] (
+    [ScaningUriModelId] nvarchar(450) NOT NULL,
+    [QueryString] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NULL,
+    CONSTRAINT [PK_ScaningUriModels] PRIMARY KEY ([ScaningUriModelId]),
+    CONSTRAINT [FK_ScaningUriModels_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+);
+2017-11-23 21:54:49.221 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (188ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [ScaningUriModels] (
+    [ScaningUriModelId] nvarchar(450) NOT NULL,
+    [QueryString] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NULL,
+    CONSTRAINT [PK_ScaningUriModels] PRIMARY KEY ([ScaningUriModelId]),
+    CONSTRAINT [FK_ScaningUriModels_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+);
+2017-11-23 21:54:49.221 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [ParsingEmailModels] (
+    [ParsingEmailModelId] nvarchar(450) NOT NULL,
+    [Email] nvarchar(max) NULL,
+    [ScaningUriModelId] nvarchar(450) NULL,
+    [Sended] bit NOT NULL,
+    [UriString] nvarchar(max) NULL,
+    CONSTRAINT [PK_ParsingEmailModels] PRIMARY KEY ([ParsingEmailModelId]),
+    CONSTRAINT [FK_ParsingEmailModels_ScaningUriModels_ScaningUriModelId] FOREIGN KEY ([ScaningUriModelId]) REFERENCES [ScaningUriModels] ([ScaningUriModelId]) ON DELETE NO ACTION
+);
+2017-11-23 21:54:49.413 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (192ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE TABLE [ParsingEmailModels] (
+    [ParsingEmailModelId] nvarchar(450) NOT NULL,
+    [Email] nvarchar(max) NULL,
+    [ScaningUriModelId] nvarchar(450) NULL,
+    [Sended] bit NOT NULL,
+    [UriString] nvarchar(max) NULL,
+    CONSTRAINT [PK_ParsingEmailModels] PRIMARY KEY ([ParsingEmailModelId]),
+    CONSTRAINT [FK_ParsingEmailModels_ScaningUriModels_ScaningUriModelId] FOREIGN KEY ([ScaningUriModelId]) REFERENCES [ScaningUriModels] ([ScaningUriModelId]) ON DELETE NO ACTION
+);
+2017-11-23 21:54:49.413 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_ParsingEmailModels_ScaningUriModelId] ON [ParsingEmailModels] ([ScaningUriModelId]);
+2017-11-23 21:54:49.600 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (187ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_ParsingEmailModels_ScaningUriModelId] ON [ParsingEmailModels] ([ScaningUriModelId]);
+2017-11-23 21:54:49.600 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_ScaningUriModels_UserId] ON [ScaningUriModels] ([UserId]);
+2017-11-23 21:54:49.786 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (185ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+CREATE INDEX [IX_ScaningUriModels_UserId] ON [ScaningUriModels] ([UserId]);
+2017-11-23 21:54:49.786 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20171113153908_update', N'2.0.1-rtm-125');
+2017-11-23 21:54:49.971 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (184ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20171113153908_update', N'2.0.1-rtm-125');
+2017-11-23 21:54:51.061 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Transaction: Committing transaction.
+2017-11-23 21:54:51.061 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Transaction: Disposing transaction.
+2017-11-23 21:54:51.061 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closing connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:51.061 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Closed connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:51.061 +07:00 [Information] Microsoft.EntityFrameworkCore.Migrations: Applying migration '20171115153919_AddCount'.
+2017-11-23 21:54:51.077 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opening connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:51.077 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Connection: Opened connection to database 'aegisaho_aegis' on server 'tcp:70.32.28.3'.
+2017-11-23 21:54:51.263 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Transaction: Beginning transaction with isolation level 'ReadCommitted'.
+2017-11-23 21:54:51.263 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+ALTER TABLE [ScaningUriModels] ADD [Count] int NOT NULL DEFAULT 0;
+2017-11-23 21:54:51.456 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (193ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+ALTER TABLE [ScaningUriModels] ADD [Count] int NOT NULL DEFAULT 0;
+2017-11-23 21:54:51.457 +07:00 [Debug] Microsoft.EntityFrameworkCore.Database.Command: Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20171115153919_AddCount', N'2.0.1-rtm-125');
+2017-11-23 21:54:51.664 +07:00 [Information] Microsoft.EntityFrameworkCore.Database.Command: Executed DbCommand (207ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20171115153919_AddCount', N'2.0.1-rtm-125');

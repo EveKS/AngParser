@@ -20,6 +20,8 @@ using AngParser.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using AngParser.Services.Telegram;
+using Microsoft.Extensions.Logging;
+using AngParser.Services;
 
 namespace AngParser
 {
@@ -36,7 +38,8 @@ namespace AngParser
     {
       #region DB connection
       //string connection = Configuration["ConnectionStrings:DefaultConnection"];
-      string connection = Configuration["ConnectionStrings:RegRu"];
+      //string connection = Configuration["ConnectionStrings:RegRu"];
+      string connection = Configuration["ConnectionStrings:aegis"];
       services.AddDbContext<ApplicationContext>(options =>
           options.UseSqlServer(connection));
       #endregion
@@ -134,7 +137,7 @@ namespace AngParser
       #endregion
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
     {
       if (env.IsDevelopment())
       {

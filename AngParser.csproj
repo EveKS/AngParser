@@ -18,6 +18,10 @@
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Services\Logging\AngParser.Services.Logging.RollingFile.csproj" />
+  </ItemGroup>
+
   <Target Name="Build Angular" Condition="'$(Configuration)'=='Release'" BeforeTargets="Build">
     <Message Text="* * * * * * Building Angular App * * * * * *" Importance="high" />
     <Exec Command="ng build -prod -aot" />

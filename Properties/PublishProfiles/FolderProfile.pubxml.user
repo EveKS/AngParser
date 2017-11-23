@@ -9,8 +9,8 @@
     <_PublishTargetUrl>D:\char</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
-    <DestinationConnectionStrings Include="RegRu">
-      <Value>Data Source=tcp:u0380448.plsk.regruhosting.ru;Integrated Security=False;Initial Catalog=u0380448_aegis;User ID=u0380448_mreveks;Password=FmmK31LS;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False</Value>
+    <DestinationConnectionStrings Include="aegis">
+      <Value>Data Source=tcp:aegis.a2hosted.com;Integrated Security=False;Initial Catalog=aegisaho_aegis;User ID=aegisaho_eveks;Password=FmmK31LS;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=true</Value>
     </DestinationConnectionStrings>
   </ItemGroup>
 </Project>
